@@ -18,6 +18,8 @@ test('the stdio server advertises semantic tokens and updates after an increment
   await conn.sendNotification('initialized', {});
   const numberType = initialized.capabilities.semanticTokensProvider.legend.tokenTypes.indexOf('number');
   assert(numberType >= 0);
+  const jsonModifier = initialized.capabilities.semanticTokensProvider.legend.tokenModifiers.indexOf('embeddedJson');
+  assert(jsonModifier >= 0);
   const uri = 'file:///fixture.py';
   const text = 'label = "🌈"; payload = \'{"id": 12}\'';
   await conn.sendNotification('textDocument/didOpen', { textDocument: { uri, languageId: 'python', version: 1, text } });
@@ -25,12 +27,13 @@ test('the stdio server advertises semantic tokens and updates after an increment
   const actual = [];
   let column = 0;
   for (let i = 0; i < first.data.length; i += 5) {
-    const [line, delta, length, type] = first.data.slice(i, i + 4);
+    const [line, delta, length, type, modifiers] = first.data.slice(i, i + 5);
     assert.equal(line, 0);
     column += delta;
-    actual.push({ column, length, type });
+    actual.push({ column, length, type, modifiers });
   }
   assert(actual.some(t => t.column === text.indexOf('12') && t.length === 2 && t.type === numberType));
+  assert(actual.every(t => t.modifiers === 1 << jsonModifier));
 
   await conn.sendNotification('textDocument/didChange', {
     textDocument: { uri, version: 2 },

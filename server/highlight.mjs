@@ -12,7 +12,17 @@ const hostStrings = {
   rust: ['string_literal', 'raw_string_literal'],
 };
 const commonStringNodes = [...new Set(Object.values(hostStrings).flat())];
-const jsonQuery = '(string) @string (pair key: (string) @property) (number) @number [(true) (false) (null)] @constant';
+const jsonQuery = `
+  (comment) @comment
+  (string) @string
+  (escape_sequence) @string.escape
+  (pair key: (string) @property.json_key)
+  (number) @number
+  [(true) (false)] @boolean
+  (null) @constant.builtin
+  ["," ":"] @punctuation.delimiter
+  ["{" "}" "[" "]"] @punctuation.bracket
+`;
 const sqlSignature = /^(?:select\s+(?:(?:[\d*'"]|distinct\b)|[\s\S]+?\bfrom\s+\S)|with\s+[\w"]+\s*(?:\([^)]*\)\s*)?as\s*\(|(?:insert|replace)\s+into\s|update\s+\S+\s+set\s|delete\s+from\s|(?:create|drop|alter|truncate)\s+(?:(?:or\s+replace|temporary|temp)\s+)?(?:table|view|database|schema|index|function|trigger|type)\b)/i;
 const detectors = [
   ['sql', sqlSignature],
@@ -29,6 +39,15 @@ const captureTypes = {
   punctuation: 'operator', string: 'string', tag: 'type', type: 'type', variable: 'variable',
 };
 export const tokenTypes = [...new Set(Object.values(captureTypes))];
+export const tokenModifiers = ['embeddedJson'];
+const jsonCaptureTypes = {
+  'property.json_key': 'property',
+  'string.escape': 'regexp',
+  boolean: 'keyword',
+  'constant.builtin': 'enumMember',
+  'punctuation.delimiter': 'operator',
+  'punctuation.bracket': 'variable',
+};
 
 function pythonMarker(node, source) {
   let carrier = node;
@@ -89,7 +108,8 @@ function tokensFor(target, region) {
     const captures = target.query.captures(tree.rootNode)
       .sort((a, b) => (b.node.endIndex - b.node.startIndex) - (a.node.endIndex - a.node.startIndex));
     for (const { name, node } of captures) {
-      const token = tokenTypes.indexOf(captureTypes[name.split('.')[0]]);
+      const jsonType = target.name === 'json' ? jsonCaptureTypes[name] : undefined;
+      const token = tokenTypes.indexOf(jsonType ?? captureTypes[name.split('.')[0]]);
       if (token >= 0) colors.fill(token, node.startIndex, node.endIndex);
     }
     for (const [start, end] of region.holes) colors.fill(-1, start, end);
@@ -97,11 +117,12 @@ function tokensFor(target, region) {
       if (text[i] === '\r' || text[i] === '\n') colors[i] = -1;
     }
     const tokens = [];
+    const modifiers = target.name === 'json' ? 1 : 0;
     for (let start = 0; start < text.length;) {
       const type = colors[start];
       let end = start + 1;
       while (end < text.length && colors[end] === type) end++;
-      if (type >= 0) tokens.push({ start: region.start + start, end: region.start + end, type, target: target.name });
+      if (type >= 0) tokens.push({ start: region.start + start, end: region.start + end, type, modifiers, target: target.name });
       start = end;
     }
     return tokens;

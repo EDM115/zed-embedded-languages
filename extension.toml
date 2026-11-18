@@ -1,7 +1,7 @@
 id = "embedded-languages"
 name = "Embedded Languages"
 description = "Detect and highlight code inside string literals using Tree-sitter."
-version = "0.1.0"
+version = "0.1.1"
 schema_version = 1
 authors = ["Embedded Languages contributors"]
 

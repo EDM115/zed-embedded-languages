@@ -1,0 +1,126 @@
+{
+  "global_lsp_settings": {
+    "semantic_token_rules": [
+      {
+        "token_type": "property",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "property.json_key",
+          "property"
+        ]
+      },
+      {
+        "token_type": "variable",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "punctuation.bracket",
+          "punctuation",
+          "variable"
+        ]
+      },
+      {
+        "token_type": "operator",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "punctuation.delimiter",
+          "punctuation",
+          "operator"
+        ]
+      },
+      {
+        "token_type": "keyword",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "boolean",
+          "keyword"
+        ]
+      },
+      {
+        "token_type": "enumMember",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "constant.builtin",
+          "constant"
+        ]
+      },
+      {
+        "token_type": "regexp",
+        "token_modifiers": [
+          "embeddedJson"
+        ],
+        "style": [
+          "string.escape",
+          "string"
+        ]
+      }
+    ]
+  },
+  "languages": {
+    "Python": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "ty",
+        "ruff",
+        "!basedpyright",
+        "!pyrefly",
+        "!pyright",
+        "!pylsp",
+        "embedded-languages"
+      ]
+    },
+    "TypeScript": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "typescript-ls",
+        "vtsls",
+        "!typescript-language-server",
+        "embedded-languages"
+      ]
+    },
+    "JavaScript": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "...",
+        "embedded-languages"
+      ]
+    },
+    "TSX": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "...",
+        "embedded-languages"
+      ]
+    },
+    "Go": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "...",
+        "embedded-languages"
+      ]
+    },
+    "Rust": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "...",
+        "embedded-languages"
+      ]
+    },
+    "TOML": {
+      "semantic_tokens": "combined",
+      "language_servers": [
+        "...",
+        "embedded-languages"
+      ]
+    }
+  }
+}

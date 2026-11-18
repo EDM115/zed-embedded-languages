@@ -31,6 +31,16 @@ test('ignores SQL if its Zed grammar is unavailable', async () => {
   assert.deepEqual(await highlights('python', 'query = "SELECT id FROM users"', empty), []);
 });
 
+test('gives embedded JSON the same classifications as standalone JSON', async () => {
+  const source = "payload = r'{\"key\": [\"a\\nb\", true, null, 2]}'";
+  const tokens = await highlights('python', source);
+  for (const [text, type] of [['"key"', 'property'], ['{', 'variable'], [':', 'operator'], ['[', 'variable'], ['true', 'keyword'], ['null', 'enumMember'], ['2', 'number'], ['\\n', 'regexp'], [']}', 'variable']]) {
+    assert(tokens.some(token => token.text === text && token.type === type), text + ' should be ' + type);
+  }
+  const rawTokens = await highlighter.highlight('python', source);
+  assert(rawTokens.every(token => token.modifiers === 1));
+});
+
 test('honors SQL markers in the first statement of a block', { skip: !hasGrammar('sql') }, async () => {
   const source = [
     '# sql', 'top = "SELECT top_column"',

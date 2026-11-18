@@ -24,22 +24,23 @@ if ready:
    $target = Join-Path $env:LOCALAPPDATA 'Zed\extensions\installed\embedded-languages'
    New-Item -ItemType Directory -Path $target -Force | Out-Null
    Copy-Item -LiteralPath '.\extension.toml', '.\extension.wasm' -Destination $target
+   (Get-Item -LiteralPath (Split-Path -Parent $target)).LastWriteTimeUtc = [DateTime]::UtcNow
    ```
 
-3. Reopen Zed. Open its settings and merge this into your Python language settings. If you already have a `language_servers` list, add `"embedded-languages"` to that list and keep your existing entries.
+3. Reopen Zed. Merge [zed-settings.json](zed-settings.json) into your existing settings. The example includes the explicit Python and TypeScript server lists used in the compatibility check. Keep your own existing server entries and append `"embedded-languages"` last so Zed gives the snippet tokens priority where ranges overlap.
 
    ```json
    {
      "languages": {
        "Python": {
          "semantic_tokens": "combined",
-         "language_servers": ["embedded-languages", "..."]
+         "language_servers": ["...", "embedded-languages"]
        }
      }
    }
    ```
 
-   Apply the same settings under the other host languages where you want highlighting, or use `"semantic_tokens": "combined"` globally if you want it for every language. Keep the SQL extension installed for SQL highlighting. The companion server uses Zed's Node runtime and fetches its npm dependencies on first launch.
+   Merge the supplied `global_lsp_settings.semantic_token_rules` to use your theme's native JSON styles for keys, delimiters, brackets, booleans, null, and escapes. These rules apply only to embedded JSON. Keep the SQL extension installed for SQL highlighting. The companion server uses Zed's Node runtime and fetches its npm dependencies on first launch.
 
 4. Open [examples/example.py](examples/example.py) or [examples/example.ts](examples/example.ts). If you updated the settings while a file was open, run **editor: restart language server**.
 
@@ -71,7 +72,7 @@ To add another installed extension as a host, add its Zed display name to `langu
 
 ## How it works
 
-Zed starts a companion language server for the host buffer. Tree-sitter finds string literal ranges, and the server parses likely snippets and sends LSP semantic tokens in the host's coordinates. Template interpolation remains highlighted as host code. Zed combines those tokens with its regular syntax highlighting.
+Zed starts a companion language server for the host buffer. Tree-sitter finds string literal ranges, and the server parses likely snippets and sends LSP semantic tokens in the host's coordinates. Template interpolation remains highlighted as host code. Zed combines those tokens with its regular syntax highlighting. The JSON captures follow [Zed's native JSON query](https://github.com/zed-industries/zed/blob/e8bc16acee5ae1937600d571d441c4b5d7b0d288/crates/grammars/src/json/highlights.scm).
 
 Detection is heuristic and depends on the target grammar. Incomplete or ambiguous strings can remain plain, and grammar errors can prevent highlighting. The server works with individual source literals and their interpolation spans. It does not evaluate strings, join separate literals, or decode arbitrary host escapes. Installed grammars and highlight queries need to be compatible with the companion's Tree-sitter runtime. The extension provides highlighting only. Embedded completion and diagnostics require separate editor support. [Zed semantic tokens](https://zed.dev/docs/semantic-tokens) · [Embedded language-server discussion](https://github.com/zed-industries/zed/discussions/60178)
 

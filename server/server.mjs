@@ -1,7 +1,7 @@
 import { isAbsolute, resolve } from 'node:path';
 import { createConnection, SemanticTokensBuilder, TextDocuments, TextDocumentSyncKind } from 'vscode-languageserver/node.js';
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { createHighlighter, tokenTypes } from './highlight.mjs';
+import { createHighlighter, tokenTypes, tokenModifiers } from './highlight.mjs';
 
 const connection = createConnection();
 const documents = new TextDocuments(TextDocument);
@@ -20,7 +20,7 @@ connection.onInitialize(async ({ initializationOptions }) => {
       positionEncoding: 'utf-16',
       textDocumentSync: TextDocumentSyncKind.Incremental,
       semanticTokensProvider: {
-        legend: { tokenTypes, tokenModifiers: [] },
+        legend: { tokenTypes, tokenModifiers },
         full: true,
       },
     },
@@ -42,9 +42,9 @@ connection.languages.semanticTokens.on(async ({ textDocument }) => {
 async function buildTokens(document) {
   const builder = new SemanticTokensBuilder();
   const tokens = await highlighter.highlight(document.languageId, document.getText());
-  for (const { start, end, type } of tokens) {
+  for (const { start, end, type, modifiers } of tokens) {
     const { line, character } = document.positionAt(start);
-    builder.push(line, character, end - start, type, 0);
+    builder.push(line, character, end - start, type, modifiers);
   }
   return builder.build();
 }

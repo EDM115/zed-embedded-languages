@@ -1,3 +1,5 @@
+ready = True
+
 if ready:
     query = """
         SELECT id, display_name
@@ -12,5 +14,5 @@ if ready:
 user_id = 42
 param_query = f"SELECT name FROM users WHERE id = {user_id}"
 page = '<section class="card"><h1>Hello</h1></section>'
-payload = '{"name": "Ada", "active": true, "id": 42}'
+payload = r'{"name": "Ada", "active": true, "id": 42, "items": [null, "a\nb"]}'
 message = "Select a file from your computer."
