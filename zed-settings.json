@@ -1,4 +1,5 @@
 {
+  "semantic_tokens": "combined",
   "global_lsp_settings": {
     "semantic_token_rules": [
       {

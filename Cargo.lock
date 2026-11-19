@@ -59,8 +59,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "embedded-languages"
-version = "0.1.1"
+name = "embedded-languages-lsp"
+version = "0.2.0"
 dependencies = [
  "zed_extension_api",
 ]

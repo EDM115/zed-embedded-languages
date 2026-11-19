@@ -1,3 +1,4 @@
 /extension.wasm
 /target/
 /server/node_modules/
+/.tmp/

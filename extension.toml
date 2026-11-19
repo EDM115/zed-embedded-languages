@@ -1,19 +1,1327 @@
-id = "embedded-languages"
+authors = ["EDM115 <zed@edm115.dev>"]
+description = "Detect and highlight code inside string literals using Tree-sitter"
+id = "embedded-languages-lsp"
 name = "Embedded Languages"
-description = "Detect and highlight code inside string literals using Tree-sitter."
-version = "0.1.1"
+repository = "https://github.com/EDM115/zed-embedded-languages"
 schema_version = 1
-authors = ["Embedded Languages contributors"]
+version = "0.2.0"
 
 [language_servers.embedded-languages]
 name = "Embedded Languages"
-languages = ["Python", "JavaScript", "TypeScript", "TSX", "Go", "Rust", "TOML"]
+languages = [
+  "ABC",
+  "AL",
+  "ASN.1",
+  "ASP Classic",
+  "AWK",
+  "ActionScript",
+  "Ada",
+  "Agda",
+  "Aiken",
+  "Aleo",
+  "Alex",
+  "Amber",
+  "Angular",
+  "Animation.txt",
+  "Ansible",
+  "Answer Set Programming",
+  "Apache Avro (IDL)",
+  "Apex",
+  "AppleScript",
+  "Arduino",
+  "ArkTS Language",
+  "Arturo",
+  "AsciiDoc",
+  "Assembly",
+  "Astro",
+  "AutoHotkey",
+  "AutoIt",
+  "Awsum",
+  "Ayla",
+  "BQN",
+  "Baml",
+  "Bash",
+  "Batch",
+  "Bats",
+  "Beancount",
+  "Beast",
+  "Bend",
+  "BibTeX",
+  "Bicep",
+  "Bicep Parameters",
+  "Biome",
+  "Bison",
+  "Blade",
+  "Blink",
+  "Blueprint",
+  "Bluespec SystemVerilog",
+  "Brainfuck",
+  "Bruno",
+  "Bsl",
+  "Build2",
+  "Build2 manifest",
+  "C",
+  "C#",
+  "C# Project File",
+  "C# Solution File",
+  "C++",
+  "C3",
+  "CAP CDS",
+  "CFEngine",
+  "CFML (Query)",
+  "CFML (Script)",
+  "CFML (Tag)",
+  "CMake",
+  "COBOL",
+  "CODEOWNERS",
+  "CONL",
+  "CQL",
+  "CSS",
+  "CSS + HubL",
+  "CSV",
+  "CSharp",
+  "CUE",
+  "Cabal",
+  "Caddyfile",
+  "Cadence",
+  "Cairo",
+  "Candid",
+  "Cap'n Proto",
+  "Cartan",
+  "Carve",
+  "Cedar",
+  "Cherri",
+  "Circom",
+  "Civet",
+  "Clarity",
+  "Clojure",
+  "CodeQL",
+  "CoffeeScript",
+  "Coffeescript",
+  "Coi",
+  "Common Lisp",
+  "Confetti",
+  "Cooklang",
+  "Coq",
+  "Corn",
+  "Cpp",
+  "Cpp2",
+  "Crystal",
+  "Csound",
+  "Curry",
+  "Cylc",
+  "Cypher",
+  "Cython",
+  "D",
+  "D2",
+  "DAML",
+  "DBML",
+  "DOT",
+  "Dafny",
+  "Dang",
+  "Dart",
+  "DataZinc",
+  "Defold",
+  "Demo Tape",
+  "Deno",
+  "Desktop Entry",
+  "Dhall",
+  "Diff",
+  "Django",
+  "Djot",
+  "Docker",
+  "Docker Compose",
+  "Dockerfile",
+  "Donna",
+  "Drogon CSP",
+  "DuckyScript",
+  "Dune",
+  "Duper",
+  "Duso",
+  "Dylan",
+  "EBNF",
+  "ECR",
+  "EDI X12",
+  "EEx",
+  "EJS",
+  "EL",
+  "ERB",
+  "Earthfile",
+  "Ebuild",
+  "Edge",
+  "Editorconfig",
+  "Eiwa",
+  "Elisp",
+  "Elixir",
+  "Elle",
+  "Elm",
+  "Elsa",
+  "Emmet",
+  "EmmyLua",
+  "EmmyLuadoc",
+  "Erlang",
+  "Exograph",
+  "F#",
+  "F# Project File",
+  "FSH",
+  "FSharp",
+  "Fennel",
+  "Feral",
+  "Ferret",
+  "Ferret Lockfile",
+  "Ferret Manifest",
+  "Fift",
+  "Firebase Rules",
+  "Fish",
+  "FlatBuffers",
+  "FlatZinc",
+  "Fluent",
+  "Fortran",
+  "Fountain",
+  "FreeStyleWiki",
+  "Freemarker",
+  "Fun",
+  "Func",
+  "G-code",
+  "GABC",
+  "GDScript",
+  "GDShader",
+  "GLSL",
+  "GN",
+  "GPR",
+  "GROQ",
+  "GXL",
+  "Gemini",
+  "Genexpr",
+  "Geno",
+  "Gherkin",
+  "Ghostty",
+  "Git Attributes",
+  "Git Commit",
+  "Git Config",
+  "Git Ignore",
+  "Git Rebase",
+  "GitHub Actions",
+  "Gleam",
+  "Glimmer (JavaScript)",
+  "Glimmer (TypeScript)",
+  "Go",
+  "Go HTML Template",
+  "Go Mod",
+  "Go Sum",
+  "Go Text Template",
+  "Go Work",
+  "Godot Resource",
+  "Google Apps Script",
+  "Gradle",
+  "Gradle KTS",
+  "Grafana Alloy",
+  "GraphQL",
+  "Gren",
+  "GreyCat",
+  "GritQL",
+  "GritQL Snippet",
+  "Groovy",
+  "HAProxy",
+  "HCL",
+  "HEEX",
+  "HEEx",
+  "HLSL",
+  "HOCON",
+  "HP-42S",
+  "HQL",
+  "HTML",
+  "HTML + HubL",
+  "HTML+ERB",
+  "HTML-Jinja",
+  "HXML",
+  "Haml",
+  "Handlebars",
+  "Hare",
+  "Haskell",
+  "Haxe",
+  "Helm",
+  "Hera",
+  "Heta",
+  "Hexaly",
+  "Hoon",
+  "Hosts",
+  "HuJSON",
+  "HubL",
+  "Huff",
+  "Hurl",
+  "Hy",
+  "Hyprland Config",
+  "Hyprlang",
+  "IFC",
+  "INI",
+  "IPKG",
+  "ISLE",
+  "Idris",
+  "Idris 2",
+  "Idris2",
+  "Immigrant",
+  "Inform 6",
+  "Ink",
+  "Inko",
+  "JS+ERB",
+  "JSDoc",
+  "JSON",
+  "JSON Lines",
+  "JSON5",
+  "JSONC",
+  "JSP",
+  "JSX",
+  "Jac",
+  "Jai",
+  "Janet",
+  "Java",
+  "JavaScript",
+  "JavaScript React",
+  "Jdl",
+  "Jerry",
+  "Jinja2",
+  "Jinja2 Inline",
+  "Jsonnet",
+  "Julia",
+  "Just",
+  "KCL",
+  "KDL",
+  "Kconfig",
+  "Kdl",
+  "Kitty",
+  "Koka",
+  "Kotlin",
+  "Koto",
+  "LESS",
+  "LEXC",
+  "LLVM IR",
+  "LOG",
+  "LaTeX",
+  "Latte",
+  "Lean 4",
+  "Ledger",
+  "Leo",
+  "Less",
+  "LikeC4",
+  "LilyPond",
+  "LilyPond Scheme",
+  "Lini",
+  "Linker Script",
+  "Liquid",
+  "Liquidsoap",
+  "Lisette",
+  "Lisp",
+  "Literate Haskell",
+  "Logcat",
+  "Logos",
+  "Logstash Config",
+  "Lox",
+  "Lua",
+  "Luau",
+  "MATLAB",
+  "MDX",
+  "MJML",
+  "MLIR",
+  "MSBuild File",
+  "Mach",
+  "Make",
+  "Makefile",
+  "Mako",
+  "Markdown",
+  "Markdown Inline",
+  "Markdown-Inline",
+  "Marko",
+  "Menhir",
+  "Meson",
+  "MetaScript",
+  "Metal",
+  "Minecraft Function",
+  "Minecraft Lang",
+  "MiniZinc",
+  "MoJu",
+  "Modelfile",
+  "Mojo",
+  "MoonBit",
+  "Motoko",
+  "Move",
+  "Move.toml",
+  "Mustache",
+  "NSIS",
+  "Nautilus",
+  "Navi",
+  "Navi Stream",
+  "NetLinx",
+  "Nginx",
+  "Nickel",
+  "Nim",
+  "Nim Format String",
+  "Nix",
+  "Noir",
+  "Nomad ACL",
+  "Nomad Agent",
+  "Nomad CSI Volume",
+  "Nomad Dynamic Host Volume",
+  "Nomad Job",
+  "Nomad Namespace",
+  "Nomad Node Pool",
+  "Nomad Resource Quota",
+  "Nomad Variable",
+  "Nu",
+  "Numscript",
+  "Nunjucks",
+  "OCaml",
+  "OCaml Interface",
+  "OCaml MLX",
+  "OCamllex",
+  "OML",
+  "OMNeT++ MSG",
+  "OMNeT++ NED",
+  "Oat",
+  "Oberon",
+  "ObjectScript XML",
+  "Objective-C",
+  "Objective-C++",
+  "ObjectscriptUdl",
+  "Odin",
+  "Odoc",
+  "OpenFGA",
+  "OpenSCAD",
+  "OpenTofu",
+  "OpenTofu Vars",
+  "OpenType Feature",
+  "Org",
+  "OverpassQL",
+  "P4 Language",
+  "PDLL",
+  "PHP",
+  "PHPDoc",
+  "PIO Assembly",
+  "PO",
+  "POD",
+  "Pact",
+  "Papyrus",
+  "Pascal",
+  "Path of Exile Filter",
+  "Pdxinfo",
+  "Perl",
+  "Perm",
+  "Pest",
+  "Pine Script",
+  "Pkl",
+  "Plain Text",
+  "Plaintext",
+  "PlantUML",
+  "PlatformIO",
+  "Polar",
+  "Pony",
+  "Poryscript",
+  "PostCSS",
+  "PowerShell",
+  "Praia",
+  "Prisma",
+  "Processing",
+  "Prolog",
+  "Properties",
+  "Proto",
+  "Protobuf",
+  "Pug",
+  "Puppet",
+  "PureScript",
+  "Pyfun",
+  "Python",
+  "Python constraints",
+  "Python requirements",
+  "QML",
+  "Qlik",
+  "Quadlet",
+  "QuakeC",
+  "Quarkdown",
+  "Quarto",
+  "Quint",
+  "R",
+  "RASI",
+  "RBS",
+  "RCL",
+  "REDscript",
+  "RMarkdown",
+  "RON",
+  "RPM Spec",
+  "RSTML",
+  "Racket",
+  "Rainbow CSV",
+  "Rainbow CSV (,)",
+  "Rainbow CSV (;)",
+  "Rainbow CSV (|)",
+  "Rainbow TSV",
+  "Rainbow TSV (⭲)",
+  "ReScript",
+  "ReStructuredText",
+  "Reason",
+  "Reason Interface",
+  "Red",
+  "Regedit",
+  "Regex",
+  "Rego",
+  "Rhai",
+  "Risor",
+  "Robot",
+  "Roc",
+  "Roto",
+  "Rotom",
+  "RsHtml",
+  "Ruby",
+  "Rust",
+  "Rux",
+  "SASS",
+  "SCSS",
+  "SOQL",
+  "SOSL",
+  "SQL",
+  "SSH Config",
+  "SVG",
+  "SageMath",
+  "Salam",
+  "Salesforce Log",
+  "Salt",
+  "Sass",
+  "Satz",
+  "Scala",
+  "Scheme",
+  "Shell Script",
+  "Sieve",
+  "Silex",
+  "SilverStripe",
+  "Simula",
+  "Skir",
+  "Skript",
+  "Slang",
+  "Slim",
+  "Slint",
+  "Smali",
+  "Smithy",
+  "Snakemake",
+  "Solidity",
+  "Soma",
+  "Souffle",
+  "Sourcepawn",
+  "Spice",
+  "SpiceDB",
+  "Spicy",
+  "Squirrel",
+  "Stan",
+  "Stan Functions",
+  "Standard ML",
+  "Starlark",
+  "Statamic Antlers",
+  "Strace",
+  "Strings",
+  "Structured Text",
+  "Structurizr DSL",
+  "Stylus",
+  "Styx",
+  "Surreal Query Language",
+  "Svelte",
+  "Sway",
+  "Swift",
+  "SysML v2",
+  "SystemRDL",
+  "SystemVerilog",
+  "TCL",
+  "TL-B",
+  "TLA+",
+  "TLA+ Cfg",
+  "TOML",
+  "TOON",
+  "TQL",
+  "TSRX",
+  "TSX",
+  "TWOL",
+  "TableGen",
+  "Tact",
+  "TailwindCSS",
+  "Taskfile",
+  "Tcl",
+  "Templ",
+  "Tera",
+  "Tera (CSS)",
+  "Tera (HTML)",
+  "Tera (JSON)",
+  "Tera (TOML)",
+  "Tera (XML)",
+  "Tera (YAML)",
+  "Terraform",
+  "Terraform Vars",
+  "Tex",
+  "Textproto",
+  "Thrift",
+  "Todo",
+  "Todotxt",
+  "Tolk",
+  "Tonel Smalltalk",
+  "Tree-sitter Query",
+  "Turtle",
+  "Twig",
+  "Txtar",
+  "TypeScript",
+  "TypeScript React",
+  "Typespec",
+  "Typst",
+  "TyranoScript",
+  "URDF",
+  "USD",
+  "UTL",
+  "Uiua",
+  "Umka",
+  "Umple",
+  "Ungrammar",
+  "Unison",
+  "Unknown",
+  "V",
+  "VEX",
+  "VHDL",
+  "VHS",
+  "VRL",
+  "Vala",
+  "Vento",
+  "Verifpal",
+  "Verilog",
+  "Veryl",
+  "Vibescript",
+  "ViewTree ($mol)",
+  "Vim Script",
+  "Vue",
+  "Vue.js",
+  "WDL",
+  "WFG",
+  "WFL",
+  "WFS",
+  "WGSL",
+  "WGSL/WESL",
+  "WIT",
+  "WPL",
+  "WebAssembly Text Format",
+  "WebIDL",
+  "WeiXin Markup Language",
+  "Wgsl",
+  "Whim",
+  "Wikitext",
+  "WoW TOC",
+  "Wren",
+  "XDR Syntax Highlight",
+  "XML",
+  "XQuery",
+  "Xcode Project",
+  "YAML",
+  "YAML+ERB",
+  "YANG",
+  "Yara",
+  "Yarn",
+  "Yarn Spinner",
+  "Yuck",
+  "Yul",
+  "Yulang",
+  "Zed Keybind Context",
+  "Zeek",
+  "Zig",
+  "ZoKrates",
+  "ass",
+  "bazelrc",
+  "bitbake",
+  "cfhtml",
+  "cfml",
+  "cfscript",
+  "devicetree",
+  "edge",
+  "env",
+  "hl7_v2",
+  "hledger",
+  "hledger-rules",
+  "http",
+  "iCal",
+  "ini",
+  "ion",
+  "ion_schema",
+  "jq",
+  "kulala-http",
+  "mcfunction",
+  "microScript",
+  "move",
+  "niva",
+  "objectscript",
+  "objectscript_routine",
+  "php_only",
+  "pica200",
+  "reST",
+  "rego",
+  "robots.txt",
+  "sBPF Assembly",
+  "spthy",
+  "tmux",
+  "ucode",
+  "vCard",
+  "whkd",
+  "xmake",
+  "ziggy",
+  "ziggy-schema",
+  "zwirn",
+]
 
 [language_servers.embedded-languages.language_ids]
-Python = "python"
-JavaScript = "javascript"
-TypeScript = "typescript"
-TSX = "typescriptreact"
-Go = "go"
-Rust = "rust"
-TOML = "toml"
+"ABC" = "abc"
+"AL" = "al"
+"ASN.1" = "asn.1"
+"ASP Classic" = "asp classic"
+"AWK" = "awk"
+"ActionScript" = "actionscript"
+"Ada" = "ada"
+"Agda" = "agda"
+"Aiken" = "aiken"
+"Aleo" = "aleo"
+"Alex" = "alex"
+"Amber" = "amber"
+"Angular" = "angular"
+"Animation.txt" = "animation.txt"
+"Ansible" = "ansible"
+"Answer Set Programming" = "answer set programming"
+"Apache Avro (IDL)" = "apache avro (idl)"
+"Apex" = "apex"
+"AppleScript" = "applescript"
+"Arduino" = "arduino"
+"ArkTS Language" = "arkts language"
+"Arturo" = "arturo"
+"AsciiDoc" = "asciidoc"
+"Assembly" = "assembly"
+"Astro" = "astro"
+"AutoHotkey" = "autohotkey"
+"AutoIt" = "autoit"
+"Awsum" = "awsum"
+"Ayla" = "ayla"
+"BQN" = "bqn"
+"Baml" = "baml"
+"Bash" = "bash"
+"Batch" = "batch"
+"Bats" = "bats"
+"Beancount" = "beancount"
+"Beast" = "beast"
+"Bend" = "bend"
+"BibTeX" = "bibtex"
+"Bicep" = "bicep"
+"Bicep Parameters" = "bicep parameters"
+"Biome" = "biome"
+"Bison" = "bison"
+"Blade" = "blade"
+"Blink" = "blink"
+"Blueprint" = "blueprint"
+"Bluespec SystemVerilog" = "bluespec systemverilog"
+"Brainfuck" = "brainfuck"
+"Bruno" = "bruno"
+"Bsl" = "bsl"
+"Build2" = "build2"
+"Build2 manifest" = "build2 manifest"
+"C" = "c"
+"C#" = "c-sharp"
+"C# Project File" = "c# project file"
+"C# Solution File" = "c# solution file"
+"C++" = "cpp"
+"C3" = "c3"
+"CAP CDS" = "cap cds"
+"CFEngine" = "cfengine"
+"CFML (Query)" = "cfml (query)"
+"CFML (Script)" = "cfml (script)"
+"CFML (Tag)" = "cfml (tag)"
+"CMake" = "cmake"
+"COBOL" = "cobol"
+"CODEOWNERS" = "codeowners"
+"CONL" = "conl"
+"CQL" = "cql"
+"CSS" = "css"
+"CSS + HubL" = "css + hubl"
+"CSV" = "csv"
+"CSharp" = "csharp"
+"CUE" = "cue"
+"Cabal" = "cabal"
+"Caddyfile" = "caddyfile"
+"Cadence" = "cadence"
+"Cairo" = "cairo"
+"Candid" = "candid"
+"Cap'n Proto" = "cap'n proto"
+"Cartan" = "cartan"
+"Carve" = "carve"
+"Cedar" = "cedar"
+"Cherri" = "cherri"
+"Circom" = "circom"
+"Civet" = "civet"
+"Clarity" = "clarity"
+"Clojure" = "clojure"
+"CodeQL" = "codeql"
+"CoffeeScript" = "coffeescript"
+"Coffeescript" = "coffeescript"
+"Coi" = "coi"
+"Common Lisp" = "common lisp"
+"Confetti" = "confetti"
+"Cooklang" = "cooklang"
+"Coq" = "coq"
+"Corn" = "corn"
+"Cpp" = "cpp"
+"Cpp2" = "cpp2"
+"Crystal" = "crystal"
+"Csound" = "csound"
+"Curry" = "curry"
+"Cylc" = "cylc"
+"Cypher" = "cypher"
+"Cython" = "cython"
+"D" = "d"
+"D2" = "d2"
+"DAML" = "daml"
+"DBML" = "dbml"
+"DOT" = "dot"
+"Dafny" = "dafny"
+"Dang" = "dang"
+"Dart" = "dart"
+"DataZinc" = "datazinc"
+"Defold" = "defold"
+"Demo Tape" = "demo tape"
+"Deno" = "deno"
+"Desktop Entry" = "desktop entry"
+"Dhall" = "dhall"
+"Diff" = "diff"
+"Django" = "django"
+"Djot" = "djot"
+"Docker" = "docker"
+"Docker Compose" = "docker compose"
+"Dockerfile" = "dockerfile"
+"Donna" = "donna"
+"Drogon CSP" = "drogon csp"
+"DuckyScript" = "duckyscript"
+"Dune" = "dune"
+"Duper" = "duper"
+"Duso" = "duso"
+"Dylan" = "dylan"
+"EBNF" = "ebnf"
+"ECR" = "ecr"
+"EDI X12" = "edi x12"
+"EEx" = "eex"
+"EJS" = "ejs"
+"EL" = "el"
+"ERB" = "erb"
+"Earthfile" = "earthfile"
+"Ebuild" = "ebuild"
+"Edge" = "edge"
+"Editorconfig" = "editorconfig"
+"Eiwa" = "eiwa"
+"Elisp" = "elisp"
+"Elixir" = "elixir"
+"Elle" = "elle"
+"Elm" = "elm"
+"Elsa" = "elsa"
+"Emmet" = "emmet"
+"EmmyLua" = "emmylua"
+"EmmyLuadoc" = "emmyluadoc"
+"Erlang" = "erlang"
+"Exograph" = "exograph"
+"F#" = "f#"
+"F# Project File" = "f# project file"
+"FSH" = "fsh"
+"FSharp" = "fsharp"
+"Fennel" = "fennel"
+"Feral" = "feral"
+"Ferret" = "ferret"
+"Ferret Lockfile" = "ferret lockfile"
+"Ferret Manifest" = "ferret manifest"
+"Fift" = "fift"
+"Firebase Rules" = "firebase rules"
+"Fish" = "fish"
+"FlatBuffers" = "flatbuffers"
+"FlatZinc" = "flatzinc"
+"Fluent" = "fluent"
+"Fortran" = "fortran"
+"Fountain" = "fountain"
+"FreeStyleWiki" = "freestylewiki"
+"Freemarker" = "freemarker"
+"Fun" = "fun"
+"Func" = "func"
+"G-code" = "g-code"
+"GABC" = "gabc"
+"GDScript" = "gdscript"
+"GDShader" = "gdshader"
+"GLSL" = "glsl"
+"GN" = "gn"
+"GPR" = "gpr"
+"GROQ" = "groq"
+"GXL" = "gxl"
+"Gemini" = "gemini"
+"Genexpr" = "genexpr"
+"Geno" = "geno"
+"Gherkin" = "gherkin"
+"Ghostty" = "ghostty"
+"Git Attributes" = "git attributes"
+"Git Commit" = "git commit"
+"Git Config" = "git config"
+"Git Ignore" = "git ignore"
+"Git Rebase" = "git rebase"
+"GitHub Actions" = "github actions"
+"Gleam" = "gleam"
+"Glimmer (JavaScript)" = "glimmer (javascript)"
+"Glimmer (TypeScript)" = "glimmer (typescript)"
+"Go" = "go"
+"Go HTML Template" = "go html template"
+"Go Mod" = "go mod"
+"Go Sum" = "go sum"
+"Go Text Template" = "go text template"
+"Go Work" = "go work"
+"Godot Resource" = "godot resource"
+"Google Apps Script" = "google apps script"
+"Gradle" = "gradle"
+"Gradle KTS" = "gradle kts"
+"Grafana Alloy" = "grafana alloy"
+"GraphQL" = "graphql"
+"Gren" = "gren"
+"GreyCat" = "greycat"
+"GritQL" = "gritql"
+"GritQL Snippet" = "gritql snippet"
+"Groovy" = "groovy"
+"HAProxy" = "haproxy"
+"HCL" = "hcl"
+"HEEX" = "heex"
+"HEEx" = "heex"
+"HLSL" = "hlsl"
+"HOCON" = "hocon"
+"HP-42S" = "hp-42s"
+"HQL" = "hql"
+"HTML" = "html"
+"HTML + HubL" = "html + hubl"
+"HTML+ERB" = "html+erb"
+"HTML-Jinja" = "html-jinja"
+"HXML" = "hxml"
+"Haml" = "haml"
+"Handlebars" = "handlebars"
+"Hare" = "hare"
+"Haskell" = "haskell"
+"Haxe" = "haxe"
+"Helm" = "helm"
+"Hera" = "hera"
+"Heta" = "heta"
+"Hexaly" = "hexaly"
+"Hoon" = "hoon"
+"Hosts" = "hosts"
+"HuJSON" = "hujson"
+"HubL" = "hubl"
+"Huff" = "huff"
+"Hurl" = "hurl"
+"Hy" = "hy"
+"Hyprland Config" = "hyprland config"
+"Hyprlang" = "hyprlang"
+"IFC" = "ifc"
+"INI" = "ini"
+"IPKG" = "ipkg"
+"ISLE" = "isle"
+"Idris" = "idris"
+"Idris 2" = "idris 2"
+"Idris2" = "idris2"
+"Immigrant" = "immigrant"
+"Inform 6" = "inform 6"
+"Ink" = "ink"
+"Inko" = "inko"
+"JS+ERB" = "js+erb"
+"JSDoc" = "jsdoc"
+"JSON" = "json"
+"JSON Lines" = "json lines"
+"JSON5" = "json5"
+"JSONC" = "json"
+"JSP" = "jsp"
+"JSX" = "javascriptreact"
+"Jac" = "jac"
+"Jai" = "jai"
+"Janet" = "janet"
+"Java" = "java"
+"JavaScript" = "javascript"
+"JavaScript React" = "javascriptreact"
+"Jdl" = "jdl"
+"Jerry" = "jerry"
+"Jinja2" = "jinja2"
+"Jinja2 Inline" = "jinja2 inline"
+"Jsonnet" = "jsonnet"
+"Julia" = "julia"
+"Just" = "just"
+"KCL" = "kcl"
+"KDL" = "kdl"
+"Kconfig" = "kconfig"
+"Kdl" = "kdl"
+"Kitty" = "kitty"
+"Koka" = "koka"
+"Kotlin" = "kotlin"
+"Koto" = "koto"
+"LESS" = "less"
+"LEXC" = "lexc"
+"LLVM IR" = "llvm ir"
+"LOG" = "log"
+"LaTeX" = "latex"
+"Latte" = "latte"
+"Lean 4" = "lean 4"
+"Ledger" = "ledger"
+"Leo" = "leo"
+"Less" = "less"
+"LikeC4" = "likec4"
+"LilyPond" = "lilypond"
+"LilyPond Scheme" = "lilypond scheme"
+"Lini" = "lini"
+"Linker Script" = "linker script"
+"Liquid" = "liquid"
+"Liquidsoap" = "liquidsoap"
+"Lisette" = "lisette"
+"Lisp" = "lisp"
+"Literate Haskell" = "literate haskell"
+"Logcat" = "logcat"
+"Logos" = "logos"
+"Logstash Config" = "logstash config"
+"Lox" = "lox"
+"Lua" = "lua"
+"Luau" = "luau"
+"MATLAB" = "matlab"
+"MDX" = "mdx"
+"MJML" = "mjml"
+"MLIR" = "mlir"
+"MSBuild File" = "msbuild file"
+"Mach" = "mach"
+"Make" = "make"
+"Makefile" = "makefile"
+"Mako" = "mako"
+"Markdown" = "markdown"
+"Markdown Inline" = "markdown inline"
+"Markdown-Inline" = "markdown-inline"
+"Marko" = "marko"
+"Menhir" = "menhir"
+"Meson" = "meson"
+"MetaScript" = "metascript"
+"Metal" = "metal"
+"Minecraft Function" = "minecraft function"
+"Minecraft Lang" = "minecraft lang"
+"MiniZinc" = "minizinc"
+"MoJu" = "moju"
+"Modelfile" = "modelfile"
+"Mojo" = "mojo"
+"MoonBit" = "moonbit"
+"Motoko" = "motoko"
+"Move" = "move"
+"Move.toml" = "move.toml"
+"Mustache" = "mustache"
+"NSIS" = "nsis"
+"Nautilus" = "nautilus"
+"Navi" = "navi"
+"Navi Stream" = "navi stream"
+"NetLinx" = "netlinx"
+"Nginx" = "nginx"
+"Nickel" = "nickel"
+"Nim" = "nim"
+"Nim Format String" = "nim format string"
+"Nix" = "nix"
+"Noir" = "noir"
+"Nomad ACL" = "nomad acl"
+"Nomad Agent" = "nomad agent"
+"Nomad CSI Volume" = "nomad csi volume"
+"Nomad Dynamic Host Volume" = "nomad dynamic host volume"
+"Nomad Job" = "nomad job"
+"Nomad Namespace" = "nomad namespace"
+"Nomad Node Pool" = "nomad node pool"
+"Nomad Resource Quota" = "nomad resource quota"
+"Nomad Variable" = "nomad variable"
+"Nu" = "nu"
+"Numscript" = "numscript"
+"Nunjucks" = "nunjucks"
+"OCaml" = "ocaml"
+"OCaml Interface" = "ocaml interface"
+"OCaml MLX" = "ocaml mlx"
+"OCamllex" = "ocamllex"
+"OML" = "oml"
+"OMNeT++ MSG" = "omnet++ msg"
+"OMNeT++ NED" = "omnet++ ned"
+"Oat" = "oat"
+"Oberon" = "oberon"
+"ObjectScript XML" = "objectscript xml"
+"Objective-C" = "objective-c"
+"Objective-C++" = "objective-c++"
+"ObjectscriptUdl" = "objectscriptudl"
+"Odin" = "odin"
+"Odoc" = "odoc"
+"OpenFGA" = "openfga"
+"OpenSCAD" = "openscad"
+"OpenTofu" = "opentofu"
+"OpenTofu Vars" = "opentofu vars"
+"OpenType Feature" = "opentype feature"
+"Org" = "org"
+"OverpassQL" = "overpassql"
+"P4 Language" = "p4 language"
+"PDLL" = "pdll"
+"PHP" = "php"
+"PHPDoc" = "phpdoc"
+"PIO Assembly" = "pio assembly"
+"PO" = "po"
+"POD" = "pod"
+"Pact" = "pact"
+"Papyrus" = "papyrus"
+"Pascal" = "pascal"
+"Path of Exile Filter" = "path of exile filter"
+"Pdxinfo" = "pdxinfo"
+"Perl" = "perl"
+"Perm" = "perm"
+"Pest" = "pest"
+"Pine Script" = "pine script"
+"Pkl" = "pkl"
+"Plain Text" = "plain text"
+"Plaintext" = "plaintext"
+"PlantUML" = "plantuml"
+"PlatformIO" = "platformio"
+"Polar" = "polar"
+"Pony" = "pony"
+"Poryscript" = "poryscript"
+"PostCSS" = "postcss"
+"PowerShell" = "powershell"
+"Praia" = "praia"
+"Prisma" = "prisma"
+"Processing" = "processing"
+"Prolog" = "prolog"
+"Properties" = "properties"
+"Proto" = "proto"
+"Protobuf" = "protobuf"
+"Pug" = "pug"
+"Puppet" = "puppet"
+"PureScript" = "purescript"
+"Pyfun" = "pyfun"
+"Python" = "python"
+"Python constraints" = "python constraints"
+"Python requirements" = "python requirements"
+"QML" = "qml"
+"Qlik" = "qlik"
+"Quadlet" = "quadlet"
+"QuakeC" = "quakec"
+"Quarkdown" = "quarkdown"
+"Quarto" = "quarto"
+"Quint" = "quint"
+"R" = "r"
+"RASI" = "rasi"
+"RBS" = "rbs"
+"RCL" = "rcl"
+"REDscript" = "redscript"
+"RMarkdown" = "rmarkdown"
+"RON" = "ron"
+"RPM Spec" = "rpm spec"
+"RSTML" = "rstml"
+"Racket" = "racket"
+"Rainbow CSV" = "rainbow csv"
+"Rainbow CSV (,)" = "rainbow csv (,)"
+"Rainbow CSV (;)" = "rainbow csv (;)"
+"Rainbow CSV (|)" = "rainbow csv (|)"
+"Rainbow TSV" = "rainbow tsv"
+"Rainbow TSV (⭲)" = "rainbow tsv (⭲)"
+"ReScript" = "rescript"
+"ReStructuredText" = "restructuredtext"
+"Reason" = "reason"
+"Reason Interface" = "reason interface"
+"Red" = "red"
+"Regedit" = "regedit"
+"Regex" = "regex"
+"Rego" = "rego"
+"Rhai" = "rhai"
+"Risor" = "risor"
+"Robot" = "robot"
+"Roc" = "roc"
+"Roto" = "roto"
+"Rotom" = "rotom"
+"RsHtml" = "rshtml"
+"Ruby" = "ruby"
+"Rust" = "rust"
+"Rux" = "rux"
+"SASS" = "sass"
+"SCSS" = "scss"
+"SOQL" = "soql"
+"SOSL" = "sosl"
+"SQL" = "sql"
+"SSH Config" = "ssh config"
+"SVG" = "svg"
+"SageMath" = "sagemath"
+"Salam" = "salam"
+"Salesforce Log" = "salesforce log"
+"Salt" = "salt"
+"Sass" = "sass"
+"Satz" = "satz"
+"Scala" = "scala"
+"Scheme" = "scheme"
+"Shell Script" = "bash"
+"Sieve" = "sieve"
+"Silex" = "silex"
+"SilverStripe" = "silverstripe"
+"Simula" = "simula"
+"Skir" = "skir"
+"Skript" = "skript"
+"Slang" = "slang"
+"Slim" = "slim"
+"Slint" = "slint"
+"Smali" = "smali"
+"Smithy" = "smithy"
+"Snakemake" = "snakemake"
+"Solidity" = "solidity"
+"Soma" = "soma"
+"Souffle" = "souffle"
+"Sourcepawn" = "sourcepawn"
+"Spice" = "spice"
+"SpiceDB" = "spicedb"
+"Spicy" = "spicy"
+"Squirrel" = "squirrel"
+"Stan" = "stan"
+"Stan Functions" = "stan functions"
+"Standard ML" = "standard ml"
+"Starlark" = "starlark"
+"Statamic Antlers" = "statamic antlers"
+"Strace" = "strace"
+"Strings" = "strings"
+"Structured Text" = "structured text"
+"Structurizr DSL" = "structurizr dsl"
+"Stylus" = "stylus"
+"Styx" = "styx"
+"Surreal Query Language" = "surreal query language"
+"Svelte" = "svelte"
+"Sway" = "sway"
+"Swift" = "swift"
+"SysML v2" = "sysml v2"
+"SystemRDL" = "systemrdl"
+"SystemVerilog" = "systemverilog"
+"TCL" = "tcl"
+"TL-B" = "tl-b"
+"TLA+" = "tla+"
+"TLA+ Cfg" = "tla+ cfg"
+"TOML" = "toml"
+"TOON" = "toon"
+"TQL" = "tql"
+"TSRX" = "tsrx"
+"TSX" = "typescriptreact"
+"TWOL" = "twol"
+"TableGen" = "tablegen"
+"Tact" = "tact"
+"TailwindCSS" = "tailwindcss"
+"Taskfile" = "taskfile"
+"Tcl" = "tcl"
+"Templ" = "templ"
+"Tera" = "tera"
+"Tera (CSS)" = "tera (css)"
+"Tera (HTML)" = "tera (html)"
+"Tera (JSON)" = "tera (json)"
+"Tera (TOML)" = "tera (toml)"
+"Tera (XML)" = "tera (xml)"
+"Tera (YAML)" = "tera (yaml)"
+"Terraform" = "terraform"
+"Terraform Vars" = "terraform vars"
+"Tex" = "tex"
+"Textproto" = "textproto"
+"Thrift" = "thrift"
+"Todo" = "todo"
+"Todotxt" = "todotxt"
+"Tolk" = "tolk"
+"Tonel Smalltalk" = "tonel smalltalk"
+"Tree-sitter Query" = "tree-sitter query"
+"Turtle" = "turtle"
+"Twig" = "twig"
+"Txtar" = "txtar"
+"TypeScript" = "typescript"
+"TypeScript React" = "typescript react"
+"Typespec" = "typespec"
+"Typst" = "typst"
+"TyranoScript" = "tyranoscript"
+"URDF" = "urdf"
+"USD" = "usd"
+"UTL" = "utl"
+"Uiua" = "uiua"
+"Umka" = "umka"
+"Umple" = "umple"
+"Ungrammar" = "ungrammar"
+"Unison" = "unison"
+"Unknown" = "unknown"
+"V" = "v"
+"VEX" = "vex"
+"VHDL" = "vhdl"
+"VHS" = "vhs"
+"VRL" = "vrl"
+"Vala" = "vala"
+"Vento" = "vento"
+"Verifpal" = "verifpal"
+"Verilog" = "verilog"
+"Veryl" = "veryl"
+"Vibescript" = "vibescript"
+"ViewTree ($mol)" = "viewtree ($mol)"
+"Vim Script" = "vim script"
+"Vue" = "vue"
+"Vue.js" = "vue.js"
+"WDL" = "wdl"
+"WFG" = "wfg"
+"WFL" = "wfl"
+"WFS" = "wfs"
+"WGSL" = "wgsl"
+"WGSL/WESL" = "wgsl/wesl"
+"WIT" = "wit"
+"WPL" = "wpl"
+"WebAssembly Text Format" = "webassembly text format"
+"WebIDL" = "webidl"
+"WeiXin Markup Language" = "weixin markup language"
+"Wgsl" = "wgsl"
+"Whim" = "whim"
+"Wikitext" = "wikitext"
+"WoW TOC" = "wow toc"
+"Wren" = "wren"
+"XDR Syntax Highlight" = "xdr syntax highlight"
+"XML" = "xml"
+"XQuery" = "xquery"
+"Xcode Project" = "xcode project"
+"YAML" = "yaml"
+"YAML+ERB" = "yaml+erb"
+"YANG" = "yang"
+"Yara" = "yara"
+"Yarn" = "yarn"
+"Yarn Spinner" = "yarn spinner"
+"Yuck" = "yuck"
+"Yul" = "yul"
+"Yulang" = "yulang"
+"Zed Keybind Context" = "zed keybind context"
+"Zeek" = "zeek"
+"Zig" = "zig"
+"ZoKrates" = "zokrates"
+"ass" = "ass"
+"bazelrc" = "bazelrc"
+"bitbake" = "bitbake"
+"cfhtml" = "cfhtml"
+"cfml" = "cfml"
+"cfscript" = "cfscript"
+"devicetree" = "devicetree"
+"edge" = "edge"
+"env" = "env"
+"hl7_v2" = "hl7_v2"
+"hledger" = "hledger"
+"hledger-rules" = "hledger-rules"
+"http" = "http"
+"iCal" = "ical"
+"ini" = "ini"
+"ion" = "ion"
+"ion_schema" = "ion_schema"
+"jq" = "jq"
+"kulala-http" = "kulala-http"
+"mcfunction" = "mcfunction"
+"microScript" = "microscript"
+"move" = "move"
+"niva" = "niva"
+"objectscript" = "objectscript"
+"objectscript_routine" = "objectscript_routine"
+"php_only" = "php_only"
+"pica200" = "pica200"
+"reST" = "rest"
+"rego" = "rego"
+"robots.txt" = "robots.txt"
+"sBPF Assembly" = "sbpf assembly"
+"spthy" = "spthy"
+"tmux" = "tmux"
+"ucode" = "ucode"
+"vCard" = "vcard"
+"whkd" = "whkd"
+"xmake" = "xmake"
+"ziggy" = "ziggy"
+"ziggy-schema" = "ziggy-schema"
+"zwirn" = "zwirn"
+# End generated language registrations

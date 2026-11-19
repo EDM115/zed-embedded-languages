@@ -1,13 +1,19 @@
 use std::{env, fs};
 
 use zed_extension_api::{
-    self as zed, serde_json, settings::LspSettings, LanguageServerInstallationStatus,
+    self as zed, LanguageServerInstallationStatus, serde_json, settings::LspSettings,
 };
 
 const PACKAGE_JSON: &str = include_str!("../server/package.json");
 const SERVER_FILES: &[(&str, &str)] = &[
     ("grammars.mjs", include_str!("../server/grammars.mjs")),
     ("highlight.mjs", include_str!("../server/highlight.mjs")),
+    ("registry.mjs", include_str!("../server/registry.mjs")),
+    ("strings.mjs", include_str!("../server/strings.mjs")),
+    (
+        "update-manifest.mjs",
+        include_str!("../server/update-manifest.mjs"),
+    ),
     ("server.mjs", include_str!("../server/server.mjs")),
 ];
 
@@ -50,7 +56,11 @@ impl zed::Extension for EmbeddedLanguages {
                 id,
                 &LanguageServerInstallationStatus::Downloading,
             );
-            let install = zed::npm_install_package("web-tree-sitter", "0.27.2");
+            let parser_version = dependencies
+                .get("web-tree-sitter")
+                .and_then(serde_json::Value::as_str)
+                .ok_or("Missing web-tree-sitter version")?;
+            let install = zed::npm_install_package("web-tree-sitter", parser_version);
             zed::set_language_server_installation_status(
                 id,
                 &LanguageServerInstallationStatus::None,
@@ -81,7 +91,7 @@ fn write_if_changed(path: &str, contents: &str) -> zed::Result<()> {
     if fs::read_to_string(path).ok().as_deref() == Some(contents) {
         return Ok(());
     }
-    fs::write(path, contents).map_err(|error| format!("Cannot write {path}: {error}"))
+    fs::write(path, contents).map_err(|error| format!("Cannot write {path} : {error}"))
 }
 
 zed::register_extension!(EmbeddedLanguages);
