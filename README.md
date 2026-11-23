@@ -8,6 +8,8 @@
 
 </div>
 
+---
+
 ```python
 def report_query(active):
     if active:
@@ -30,7 +32,7 @@ The file's language is the **host** (Python in this example). The code inside th
 
 ## Quick start
 
-1. **Install the extension** using the [source](#install-from-source) or [Windows prebuilt](#install-a-prebuilt-release-on-windows) instructions below.
+1. **Install the extension** by opening Zed's Extebsion view & searching for "Embedded Languages". Otherwise you can follow the [prebuilt release](#install-a-prebuilt-release) or [source](#install-from-source) instructions below.
 2. **Install the target language extension in Zed**. Start with **SQL** for the example above. JSON highlighting is bundled. For the other examples, install the corresponding target extensions (for example HTML, XML, SCSS & SASS, TOML, nginx, Dockerfile or PowerShell).
 3. **Enable combined semantic token**. Open `zed: open settings file` and merge the following for the host language you want to try first :  
    ```json
@@ -44,22 +46,41 @@ The file's language is the **host** (Python in this example). The code inside th
    }
    ```
    If you already have an explicit `language_servers` list, append `"embedded-languages"` to that list and retain your existing entries and exclusions. Use the Zed language name shown for your file. To use the repository's JSON-specific theme styles, merge `global_lsp_settings.semantic_token_rules` from [zed-settings.json](zed-settings.json). That file also has examples for other hosts. [Zed language server settings](https://zed.dev/docs/configuring-languages#choosing-language-servers)
-4. **Open a host file**. Open the checkout as a folder, review and trust it if Zed prompts, then open [the Python example](examples/example.py). The companion fetches its npm dependencies through Zed's Node runtime on first launch. The Languages Server menu in the status bar should list `embedded-languages` when it is running. [Zed worktree trust](https://zed.dev/docs/worktree-trust)
+4. **Open a host file**. Open the checkout as a folder, review and trust it if Zed prompts, then open [the Python example](examples/example.py). On first launch, Zed downloads the companion server from GitHub Releases. The Language Servers menu in the status bar should list `embedded-languages` when it is running. [Zed worktree trust](https://zed.dev/docs/worktree-trust)
 
 ### Install from source
 
 Install Rust via [rustup](https://rustup.rs/), then run `rustup target add wasm32-wasip2`. In Zed, run `zed: install dev extension` and select the checkout folder containing `extension.toml`. Zed builds the extension. [Zed extension development guide](https://zed.dev/docs/extensions/developing-extensions)
 
-### Install a prebuilt release on Windows
+### Install a prebuilt release
 
-Download the `zed-embedded-languages-<version>.zip` asset from [GitHub Releases](https://github.com/EDM115/zed-embedded-languages/releases). Extract the archive containing `extension.toml` and `extension.wasm`, then quit Zed.  
-Run these PowerShell commands from the extracted directory :
+Download `extension.toml` and `extension.wasm` from the same [GitHub release](https://github.com/EDM115/zed-embedded-languages/releases). For releases before 1.0.0, extract both files from the release ZIP. Quit Zed and run the commands for your platform from the directory containing both files.
+
+#### Windows (PowerShell)
+
 ```powershell
 $target = Join-Path $env:LOCALAPPDATA 'Zed\extensions\installed\embedded-languages-lsp'
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 Copy-Item -LiteralPath '.\extension.toml', '.\extension.wasm' -Destination $target
 (Get-Item -LiteralPath (Split-Path -Parent $target)).LastWriteTimeUtc = [DateTime]::UtcNow
 ```
+
+#### macOS and Linux
+
+```sh
+case "$(uname -s)" in
+  Darwin) installed="$HOME/Library/Application Support/Zed/extensions/installed" ;;
+  Linux) installed="${XDG_DATA_HOME:-$HOME/.local/share}/zed/extensions/installed" ;;
+esac
+target="$installed/embedded-languages-lsp"
+mkdir -p "$target"
+cp extension.toml extension.wasm "$target/"
+touch "$installed"
+```
+
+#### Post-install steps
+
+If you use a custom Zed data directory, use its `extensions/installed` path instead. [Zed extension locations](https://zed.dev/docs/extensions/installing-extensions#installation-location)  
 Reopen Zed and finish the [quick start](#quick-start). Use the same steps to replace an installed prebuilt version.
 
 ## Explore the examples
@@ -131,12 +152,13 @@ From a source checkout, run `npm ci --prefix server --ignore-scripts`, then pass
 $installed = Join-Path $env:LOCALAPPDATA 'Zed\extensions\installed'
 node server/update-manifest.mjs --installed $installed
 ```
-For a prebuilt installation on Windows, start the companion once so Zed extracts the updater and its dependencies. Quit Zed before running these commands :
+For a prebuilt installation on Windows, start the companion once to download the updater and its dependencies. Quit Zed before running these commands :
 ```powershell
 $data = Join-Path $env:LOCALAPPDATA 'Zed\extensions'
 $installed = Join-Path $data 'installed'
-$updater = Join-Path $data 'work\embedded-languages-lsp\update-manifest.mjs'
 $manifest = Join-Path $installed 'embedded-languages-lsp\extension.toml'
+$version = (Select-String -LiteralPath $manifest -Pattern '^version = "([^"]+)"$').Matches[0].Groups[1].Value
+$updater = Join-Path $data "work\embedded-languages-lsp\server-$version\update-manifest.mjs"
 node $updater --installed $installed --manifest $manifest
 ```
 If the host grammar uses unusual names for string nodes, set `lsp.embedded-languages.initialization_options.hosts.<languageId>.stringNodes` to the relevant Tree-sitter node names. Use the host's ID from the manifest's `language_ids` table. A custom list replaces the inferred node list for that host.
@@ -149,7 +171,7 @@ If the host grammar uses unusual names for string nodes, set `lsp.embedded-langu
 | The server is running but all strings have their usual color | Check that `semantic_tokens` is `"combined"` for the host and that the target's Zed grammar is installed. Try the Python example with SQL installed or test bundled JSON. |
 | One snippet stays plain | Try a language hint. Automatic detection prefers a clear match and dialect syntax or incomplete snippets can be ambiguous for the installed parser. |
 | The companion disappears after replacing the WASM on Windows | Install the new WASM while Zed is closed. If the extension has already reloaded, restart the language server from a focused host buffer and check the Languages Server menu. |
-| The server fails to start | Run `zed: open log` and look for `embedded-languages` or a Node/npm setup error. The first start needs access to the npm registry if the dependencies are missing. |
+| The server fails to start | Run `zed: open log` and look for `embedded-languages`. The first start of each version needs access to GitHub Releases and Zed's Node runtime. |
 
 ## How highlighting works
 
@@ -158,13 +180,41 @@ The companion supplies highlighting only. It uses compatible installed Tree-sitt
 
 ## Development
 
-Run the tests and build the WASM from the repository root. The example below points tests at an existing Zed profile on Windows. On another platform, set `ZED_TEST_EXTENSIONS_DIR` to the corresponding installed-extensions directory :
+### Build on Windows, macOS or Linux
+
+Install stable Rust with [rustup](https://rustup.rs/) and run the following from the repository root on any of the three platforms :
+```sh
+rustup target add wasm32-wasip2
+cargo build --locked --release --target wasm32-wasip2
+```
+The build produces `target/wasm32-wasip2/release/embedded_languages_lsp.wasm`. For a GitHub release, upload it as `extension.wasm` alongside `extension.toml`. Run `pwsh -File scripts/package-server.ps1` with Node.js, npm, and `tar` installed and attach the resulting `target/embedded-languages-server-<version>.tar.gz` to the same public release. Use the version in `extension.toml` as the release tag (for example, `1.0.0`).  
+To test an unpublished build, extract that archive into `extensions/work/embedded-languages-lsp/server-<version>` in your Zed data directory before starting the companion.
+
+### Run the tests
+
+Tests that need a specific installed grammar skip if that grammar is missing.  
+To refresh the published host catalog, run `pwsh -File scripts/update-language-registry.ps1`. It reads the [official registry](https://github.com/zed-industries/extensions/blob/main/extensions.toml) and the marketplace archives, then saves the audit to `.tmp/zed-language-registry/audit.json`.  
+Install a current Node.js LTS with npm. Use the `extensions/installed` path for your Zed profile from the [prebuilt install instructions](#install-a-prebuilt-release) :
+
+#### Windows (PowerShell)
+
 ```powershell
 npm ci --prefix server --ignore-scripts
 $env:ZED_TEST_EXTENSIONS_DIR = Join-Path $env:LOCALAPPDATA 'Zed\extensions\installed'
 node --test tests/*.test.mjs
-cargo build --locked --release --target wasm32-wasip2
 ```
-Tests that need a specific installed grammar skip if that grammar is missing. For a prebuilt archive, copy `target/wasm32-wasip2/release/embedded_languages_lsp.wasm` to `extension.wasm` and package it alongside `extension.toml`.  
-To refresh the published host catalog, run `pwsh -File scripts/update-language-registry.ps1`. It reads the [official registry](https://github.com/zed-industries/extensions/blob/main/extensions.toml) and the marketplace archives, then saves the audit to `.tmp/zed-language-registry/audit.json`.  
+
+#### macOS and Linux
+
+```sh
+npm ci --prefix server --ignore-scripts
+case "$(uname -s)" in
+  Darwin) export ZED_TEST_EXTENSIONS_DIR="$HOME/Library/Application Support/Zed/extensions/installed" ;;
+  Linux) export ZED_TEST_EXTENSIONS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zed/extensions/installed" ;;
+esac
+node --test tests/*.test.mjs
+```
+
+---
+
 [Changelog](CHANGELOG.md) · [MIT license](LICENSE)

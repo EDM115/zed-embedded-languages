@@ -19,7 +19,7 @@ connection.onInitialize(async ({ initializationOptions }) => {
   const directory =
     typeof override === "string" && isAbsolute(override)
       ? override
-      : resolve(import.meta.dirname, "../../installed");
+      : resolve(import.meta.dirname, "../../../installed");
   highlighter = await createHighlighter(directory, options, (message) =>
     connection.console.warn(message),
   );

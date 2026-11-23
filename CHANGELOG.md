@@ -1,5 +1,9 @@
 # `zed-embedded-languages` changelog
 
+## v1.0.0
+
+📦 chore : Zed downloads the companion server and its dependencies as a separate versioned release asset and reuses the local installation on subsequent starts
+
 ## v0.3.0
 
 ### Changes
