@@ -1,5 +1,18 @@
 # `zed-embedded-languages` changelog
 
+## v0.3.0
+
+### Changes
+
+✨ feat : detect SQL after leading comments, recursive CTEs and simple `SELECT` expressions without `FROM`  
+✨ feat : recognize nested JSON arrays, more HTML & XML fragments and distinctive SCSS, TOML, nginx, Dockerfile & PowerShell syntax  
+🐛 fix : recover SQL highlighting for MariaDB's directional `TRIM` inside nested calls and `CASE` expressions and for SQLite bind parameters  
+🐛 fix : handle literal ampersands and omitted end tags in HTML, XML internal DTD subsets and Dockerfiles without a final newline  
+🐛 fix : decode common host escapes and Python f-string braces while mapping highlights to the original literal ranges and preserving raw strings and interpolation  
+🐛 fix : require a single JSON value for automatic detection  
+📚 docs : add setup, detection and troubleshooting guides with examples organized by host language  
+✅ tests : cover grammar recovery, split strings with escapes, UTF-16 source ranges and ordinary text that should stay plain
+
 ## v0.2.0
 
 ### Breaking changes

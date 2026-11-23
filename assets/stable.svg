@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1646" height="1646" viewBox="0 0 1646 1646" role="img" aria-labelledby="title description">
+  <title id="title">Zed Stable · Embedded Languages</title>
+  <desc id="description">Charcoal Zed Stable icon with the Van Helsing interpolation badge in the bottom-right corner.</desc>
+  <!-- Zed logomark path from https://github.com/zed-industries/zed/blob/main/assets/images/zed_logo.svg -->
+  <defs>
+    <path id="zed-shape" fill-rule="evenodd" clip-rule="evenodd" d="M9 6C7.34315 6 6 7.34315 6 9V75H0V9C0 4.02944 4.02944 0 9 0H89.3787C93.3878 0 95.3955 4.84715 92.5607 7.68198L43.0551 57.1875H57V51H63V58.6875C63 61.1728 60.9853 63.1875 58.5 63.1875H37.0551L26.7426 73.5H73.5V36H79.5V73.5C79.5 76.8137 76.8137 79.5 73.5 79.5H20.7426L10.2426 90H87C88.6569 90 90 88.6569 90 87V21H96V87C96 91.9706 91.9706 96 87 96H6.62132C2.61224 96 0.604504 91.1529 3.43934 88.318L52.7574 39H39V45H33V37.5C33 35.0147 35.0147 33 37.5 33H58.7574L69.2574 22.5H22.5V60H16.5V22.5C16.5 19.1863 19.1863 16.5 22.5 16.5H75.2574L85.7574 6H9Z"/>
+    <clipPath id="tile-clip"><path d="M115.15 0.65H396.85C461.886 0.65 511.35 50.114 511.35 115.15V396.85C511.35 461.886 461.886 511.35 396.85 511.35H115.15C50.114 511.35 0.65 461.886 0.65 396.85V115.15C0.65 50.114 50.114 0.65 115.15 0.65Z"/></clipPath>
+    <clipPath id="mark-surface">
+      <path d="M0 0H96V4.25L4.25 96H0Z M34 56H64V65H34Z M18 72H80V81H18Z M0 89H96V96H0Z"/>
+    </clipPath>
+    <linearGradient id="outer-rail-opacity" x1="0" y1="20" x2="0" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <linearGradient id="middle-rail-opacity" x1="0" y1="34" x2="0" y2="53" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <linearGradient id="inner-rail-opacity" x1="0" y1="49" x2="0" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <mask id="rail-fade" x="-2" y="-2" width="100" height="100" maskUnits="userSpaceOnUse">
+      <path fill="white" fill-rule="evenodd" d="M-2 -2H98V98H-2Z M89.7 19H96.3V44H89.7Z M73.2 33H79.8V53H73.2Z M56.7 48H63.3V60H56.7Z"/>
+      <rect x="89.7" y="19" width="6.6" height="25.1" fill="url(#outer-rail-opacity)"/>
+      <rect x="73.2" y="33" width="6.6" height="20.1" fill="url(#middle-rail-opacity)"/>
+      <rect x="56.7" y="48" width="6.6" height="12.1" fill="url(#inner-rail-opacity)"/>
+    </mask>
+    <linearGradient id="stable-shell" x1="0" y1="0" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A2D30"/>
+      <stop offset=".16" stop-color="#292928"/>
+      <stop offset=".31" stop-color="#232323"/>
+      <stop offset=".49" stop-color="#191919"/>
+      <stop offset=".61" stop-color="#131313"/>
+      <stop offset=".77" stop-color="#0F0F0F"/>
+      <stop offset="1" stop-color="#0A0909"/>
+    </linearGradient>
+    <radialGradient id="shell-glow" cx="371" cy="42" r="262" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 14) scale(1 .68)">
+      <stop stop-color="#777772" stop-opacity=".16"/>
+      <stop offset=".55" stop-color="#757773" stop-opacity=".07"/>
+      <stop offset="1" stop-color="#757773" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="lower-glint" cx="145" cy="400" r="95" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 160) scale(1 .60)">
+      <stop stop-color="#6B6663" stop-opacity=".085"/>
+      <stop offset="1" stop-color="#6B6663" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="charcoal-grain" width="73" height="71" patternUnits="userSpaceOnUse" patternTransform="rotate(7)">
+      <path fill="#CADED9" opacity=".105" d="M11.935 60.772h1.983v1.803h-1.983ZM54.287 50.53h1.653v1.545h-1.653ZM3.899 44.205h2.066v2.309h-2.066ZM32.475 52.283h1.855v1.155h-1.855ZM19.41 62.99h1.354v1.893h-1.354ZM23.336 53.639h1.03v2.313h-1.03ZM64.127 32.057h1.687v2.078h-1.687ZM3.957 2.896h2.05v1.306h-2.05ZM53.511 42.668h0.956v2.172h-0.956ZM66.921 4.289h1.882v1.072h-1.882ZM6.558 20.955h1.11v1.182h-1.11ZM56.227 4.164h1.387v1.435h-1.387ZM68.905 19.703h2.254v2.273h-2.254ZM12.582 42.386h1.217v1.68h-1.217ZM15.31 55.397h1.034v1.559h-1.034ZM28.068 49.005h1.984v1.462h-1.984ZM51.506 34.506h1.704v1.829h-1.704ZM0.19 2.169h1.734v1.452h-1.734ZM45.431 41.025h2.091v2.216h-2.091ZM55.286 39.291h1.892v2.328h-1.892ZM57.837 33.261h2.039v1.601h-2.039ZM31.328 45.459h2.108v2.093h-2.108ZM2.268 37.875h2.141v1.758h-2.141ZM50.083 11.102h2.182v1.538h-2.182ZM44.415 25.17h1.163v1.826h-1.163ZM8.661 2.907h1.279v1.039h-1.279ZM60.848 9.629h1.952v2.334h-1.952ZM20.432 19.977h1.432v1.295h-1.432ZM47.121 35.706h2.032v1.947h-2.032ZM55.316 7.249h1.335v0.996h-1.335ZM5.252 48.862h1.089v0.966h-1.089ZM39.453 26.159h1.416v1.239h-1.416ZM10.577 59.859h1.544v1.752h-1.544ZM64.249 38.552h2.006v1.272h-2.006ZM37.985 58.294h2.206v1.894h-2.206ZM4.789 51.85h1.59v0.983h-1.59ZM37.519 15.391h1.827v1.113h-1.827ZM17.63 13.464h2.148v1.719h-2.148ZM49.359 44.04h1.329v2.307h-1.329ZM27.975 66.459h1.981v1.252h-1.981ZM8.175 36.083h1.927v1.125h-1.927ZM26.21 10.466h1.229v1.071h-1.229ZM6.86 0.858h1.943v1.888h-1.943ZM53.823 7.85h1.872v2.222h-1.872ZM39.635 16.984h2.093v1.039h-2.093ZM18.7 19.121h2.22v2.278h-2.22ZM64.529 1.402h1.082v1.142h-1.082ZM39.788 7.597h1.292v1.852h-1.292ZM35.233 43.664h1.067v2.203h-1.067ZM61.144 29.323h1.88v1.044h-1.88ZM42.334 13.471h2.019v1.142h-2.019ZM65.347 4.23h1.104v1.227h-1.104ZM3.917 5.463h1.769v2.197h-1.769ZM46.296 52.55h2.046v0.969h-2.046ZM25.546 57.257h1.745v1.863h-1.745ZM21.375 36.484h1.688v1.495h-1.688ZM29.623 24.738h1.588v1.574h-1.588ZM12.995 7.111h1.317v2.082h-1.317ZM54.114 22.597h2.266v1.918h-2.266ZM69.516 60.554h1.635v2.199h-1.635ZM30.656 2.119h2.266v2.193h-2.266ZM45.536 11.396h2.144v1.978h-2.144ZM22.039 30.223h2.283v1.098h-2.283ZM51.563 39.34h2.029v1.023h-2.029ZM9.058 45.753h1.587v1.362h-1.587ZM33.051 65.128h1.117v1.159h-1.117ZM66.749 45.012h1.486v1.51h-1.486ZM18.828 31.7h2.337v1.921h-2.337ZM19.988 16.557h1.867v1.369h-1.867ZM58.879 2.612h1.653v1.37h-1.653ZM48.477 33.234h2.035v1.711h-2.035ZM61.522 9.699h1.896v2.261h-1.896ZM1.095 25.468h1.634v2.226h-1.634ZM19.944 57.986h1.48v1.136h-1.48ZM9.633 51.804h1.653v2.048h-1.653ZM68.126 15.858h1.402v0.961h-1.402ZM21.893 46.693h1.326v1.401h-1.326ZM16.129 2.468h1.132v1.099h-1.132ZM4.177 65.533h2.111v1.597h-2.111ZM44.767 48.406h1.594v1.022h-1.594ZM43.136 6.957h1.969v1.959h-1.969ZM39.649 49.61h1.228v0.956h-1.228ZM67.001 36.374h2.315v2.096h-2.315ZM14.595 14.53h1.944v2.271h-1.944ZM26.193 10.756h1.07v1.099h-1.07ZM14.432 60.544h1.165v1.999h-1.165ZM43.298 12.678h1.194v2.088h-1.194ZM57.156 23.621h2.147v1.098h-2.147ZM42.425 21.605h1.104v1.089h-1.104ZM45.485 41.236h2.003v1.248h-2.003ZM47.937 14.436h1.989v2.252h-1.989ZM67.767 0.531h2.201v1.389h-2.201ZM32.555 19.288h1.199v2.007h-1.199ZM38.279 27.733h0.955v0.992h-0.955ZM14.841 54.538h1.137v2.349h-1.137ZM6.892 46.815h1.103v1.67h-1.103ZM56.05 21.11h1.425v1.476h-1.425ZM18.115 39.414h1.272v1.525h-1.272ZM16.362 24.015h0.964v2.35h-0.964ZM9.515 53.989h1.131v1.837h-1.131ZM50.49 35.143h1.482v1.403h-1.482ZM29.506 32.24h1.131v2.283h-1.131ZM22.654 53.296h1.367v2.18h-1.367ZM4.519 64.772h2.332v1.5h-2.332ZM10.945 13.481h2.188v2.116h-2.188ZM35.546 56.005h2.122v1.583h-2.122ZM11.048 57.45h1.304v1.455h-1.304ZM34.056 22.343h1.214v1.119h-1.214ZM29.351 9.487h1.362v2.102h-1.362ZM27.29 3.584h2.339v1.96h-2.339ZM5.427 29.445h1.681v2.016h-1.681ZM12.927 63.587h2.025v1.738h-2.025ZM53.885 63.042h2.32v1.941h-2.32ZM63.127 40.184h2.062v1.505h-2.062ZM45.604 61.392h1.241v2.07h-1.241ZM47.952 64.346h1.451v1.926h-1.451ZM68.337 17.798h1.354v1.25h-1.354ZM28.155 12.595h1.049v1.999h-1.049ZM16.693 25.794h2.249v1.525h-2.249ZM57.349 0.67h1.295v1.714h-1.295ZM61.49 18.428h1.823v1.214h-1.823ZM23.554 14.438h1.422v1.656h-1.422Z"/>
+      <path fill="#020304" opacity=".24" d="M38.487 4.803h2.27v1.785h-2.27ZM20.108 38.064h1.612v2.431h-1.612ZM66.49 55.87h1.691v1.571h-1.691ZM55.965 67.417h2.241v1.921h-2.241ZM14.831 39.462h2.303v1.014h-2.303ZM15.363 8.741h2.049v1.804h-2.049ZM60.224 56.586h1.826v1.577h-1.826ZM6.863 6.566h2.029v1.31h-2.029ZM22.997 14.96h1.757v1.438h-1.757ZM51.772 44.872h2.085v1.429h-2.085ZM2.695 39.805h2.167v1.386h-2.167ZM21.931 45.504h2.255v1.297h-2.255ZM3.061 21.881h1.095v1.441h-1.095ZM36.888 55.835h1.031v1.792h-1.031ZM16.395 2.777h1.538v1.687h-1.538ZM60.437 49.68h1.261v1.357h-1.261ZM7.277 37.452h2.026v1.326h-2.026ZM26.537 21.462h1.157v2.036h-1.157ZM5.681 10.021h2.304v1.949h-2.304ZM4.607 33.625h1.889v1.732h-1.889ZM29.45 14.795h1.596v1.531h-1.596ZM54.19 13.297h1.778v1.183h-1.778ZM46.152 10.574h1.466v1.635h-1.466ZM49.001 46.204h1.077v1.654h-1.077ZM44.314 40.179h1.28v2.348h-1.28ZM30.34 11.836h2.353v2.353h-2.353ZM4.021 63.245h1.25v1.423h-1.25ZM39.888 55.861h1.953v2.06h-1.953ZM46.905 14.263h1.08v2.147h-1.08ZM61.876 63.786h1.076v1.98h-1.076ZM65.492 17.862h1.704v1.424h-1.704ZM4.623 39.874h1.926v2.312h-1.926ZM21.938 13.354h1.117v1.584h-1.117ZM1.459 31.309h0.971v1.535h-0.971ZM6.133 12.52h2.295v2.401h-2.295ZM51.017 5.604h1.783v1.417h-1.783ZM53.18 38.652h1.722v1.832h-1.722ZM46.898 21.274h0.984v1.241h-0.984ZM0.253 18.838h1.996v0.986h-1.996ZM56.717 11.741h1.279v2.245h-1.279ZM12.825 37.503h2.035v1.292h-2.035ZM10.52 66.507h2.082v1.293h-2.082ZM30.276 67.2h2.383v1.403h-2.383ZM58.578 53.56h2.237v2.248h-2.237ZM20.871 60.646h1.595v1.311h-1.595ZM58.552 11.043h1.337v1.578h-1.337ZM66.117 64.013h1.73v1.682h-1.73ZM12.039 16.167h1.133v2.175h-1.133ZM64.492 11.466h1.932v1.408h-1.932ZM50.49 7.372h1.031v1.392h-1.031ZM34.555 16.951h1.102v2.381h-1.102ZM40.499 35.748h1.197v1.299h-1.197ZM37.418 7.24h2.168v1.986h-2.168ZM68.477 61.691h1.241v2.159h-1.241ZM68.61 56.21h1.447v1.804h-1.447ZM54.69 44.824h2.005v1.626h-2.005ZM59.303 60.392h2.103v1.052h-2.103ZM36.679 55.155h1.437v1.152h-1.437ZM56.917 47.753h2.192v1.718h-2.192ZM2.054 65.497h1.069v1.622h-1.069ZM25.105 31.739h2.312v1.438h-2.312ZM40.657 37.126h2.076v1.707h-2.076ZM33.102 22.564h1.335v1.074h-1.335ZM46.114 26.701h1.437v1.927h-1.437ZM64.461 59.745h1.241v1.519h-1.241ZM16.744 42.422h1.692v2.446h-1.692ZM5.155 61.896h1.54v1.724h-1.54ZM45.856 57.451h1.282v2.075h-1.282ZM21.06 37.765h1.295v2.431h-1.295ZM1.419 44.569h1.494v1.497h-1.494ZM64.807 46.522h1.229v2.141h-1.229ZM15.098 32.096h1.496v1.713h-1.496ZM52.018 43.301h1.437v1.788h-1.437ZM30.682 45.05h0.96v2.206h-0.96ZM6.905 17.984h2.18v1.639h-2.18ZM21.868 67.565h1.287v1.819h-1.287ZM37.254 19.248h1.782v2.406h-1.782ZM39.432 26.554h2.425v2.362h-2.425ZM68.783 63.845h2.115v1.587h-2.115ZM17.775 0.621h1.27v1.423h-1.27ZM38.866 67.148h2.184v1.515h-2.184ZM40.837 42.228h2.18v1.413h-2.18ZM59.644 66.935h2.297v2.133h-2.297ZM17.391 21.108h2.062v1.821h-2.062ZM60.503 60.434h2.338v0.984h-2.338ZM25.712 32.927h1.066v1.687h-1.066ZM29.93 66.606h1.624v1.921h-1.624ZM67.619 13.201h1.373v1.799h-1.373ZM16.743 5.687h1.868v1.036h-1.868ZM1.894 52.46h1.565v2.107h-1.565ZM30.697 7.977h1.222v2.308h-1.222ZM7.073 52.66h1.604v1.85h-1.604ZM52.465 63.88h1.926v1.468h-1.926ZM33.616 16.846h1.894v2.413h-1.894ZM12.993 35.19h1.539v1.084h-1.539ZM65.449 20.073h2.439v2.392h-2.439ZM22.228 27.632h2.278v1.368h-2.278ZM0.883 65.56h2.1v1.381h-2.1ZM7.23 36.652h2.437v1.192h-2.437ZM62.905 30.113h2.437v1.984h-2.437ZM19.643 22.455h1.407v1.837h-1.407ZM58.847 38.784h1.153v1.037h-1.153ZM22.56 6.294h1.789v1.445h-1.789ZM9.429 44.785h2.128v1.552h-2.128ZM66.748 52.008h1.1v1.205h-1.1ZM47.179 42.656h1.543v1.882h-1.543ZM16.253 64.814h1.571v2.246h-1.571ZM4.222 30.675h1.106v1.102h-1.106ZM13.384 19.342h2.043v2.252h-2.043ZM19.45 62.523h1.867v1.108h-1.867ZM3.065 4.929h1.953v2.304h-1.953ZM65.065 48.2h1.123v2.439h-1.123ZM66.569 20.154h2.417v1.424h-2.417ZM2.499 52.188h1.428v1.314h-1.428ZM24.621 60.628h1.4v1.357h-1.4ZM27.702 0.862h1.682v1.389h-1.682ZM59.877 24.035h0.99v2.054h-0.99ZM35.814 23.16h1.828v1.231h-1.828ZM48.783 44.418h1.258v1.389h-1.258ZM5.208 64.492h1.631v1.014h-1.631ZM52.805 31.721h1.712v2.08h-1.712ZM0.904 65.907h1.06v1.434h-1.06ZM9.032 48.575h1.352v1.845h-1.352ZM7.368 28.505h2.257v2.335h-2.257ZM20.157 28.342h1.807v1.263h-1.807ZM10.674 31.103h1.104v1.065h-1.104Z"/>
+    </pattern>
+    <linearGradient id="grain-level" x1="0" y1="0" x2="0" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".78"/>
+      <stop offset=".66" stop-color="#FFFFFF" stop-opacity=".31"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".18"/>
+    </linearGradient>
+    <mask id="grain-fade" x="0" y="0" width="512" height="512" maskUnits="userSpaceOnUse">
+      <rect width="512" height="512" fill="url(#grain-level)"/>
+    </mask>
+    <linearGradient id="stable-mark-depth" x1="0" y1="96" x2="64.1" y2="-18" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FEFEFE"/>
+      <stop offset=".17" stop-color="#E5E5E6"/>
+      <stop offset=".36" stop-color="#A9A8A8"/>
+      <stop offset=".58" stop-color="#696969"/>
+      <stop offset=".72" stop-color="#3E3F40"/>
+      <stop offset=".82" stop-color="#222323" stop-opacity=".76"/>
+      <stop offset=".89" stop-color="#222323" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="stable-mark-face" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset=".516" stop-color="#FEFEFE"/>
+      <stop offset=".59" stop-color="#FEFEFE" stop-opacity=".54"/>
+      <stop offset=".76" stop-color="#FEFEFE" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g transform="scale(3.21484375)">
+    <g id="charcoal-tile" clip-path="url(#tile-clip)">
+      <rect width="512" height="512" fill="url(#stable-shell)"/>
+      <rect width="512" height="512" fill="url(#shell-glow)"/>
+      <rect width="512" height="512" fill="url(#lower-glint)"/>
+      <rect width="512" height="512" fill="url(#charcoal-grain)" mask="url(#grain-fade)"/>
+    </g>
+    <g id="zed-logomark" transform="translate(119.26 118.71) scale(2.853)">
+      <use xlink:href="#zed-shape" fill="url(#stable-mark-depth)" mask="url(#rail-fade)"/>
+      <use xlink:href="#zed-shape" fill="url(#stable-mark-face)" clip-path="url(#mark-surface)"/>
+    </g>
+    <g id="van-helsing-badge" transform="translate(489 469) scale(.86) translate(-245 -130)">
+  <defs>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#263340"/>
+      <stop offset="1" stop-color="#131A20"/>
+    </linearGradient>
+  </defs>
+  <rect width="245" height="130" rx="35" fill="url(#teal)" stroke="#9580FF" stroke-width="4"/>
+  <rect x="9" y="9" width="227" height="112" rx="27" fill="none" stroke="#708CA9" stroke-width="2"/>
+  <rect x="59" y="24" width="127" height="82" rx="24" fill="#0B0D0F" stroke="#414D58" stroke-width="3"/>
+  <path d="M29 44V63M43 44V63M202 67V86M216 67V86"
+        stroke="#FFFF80" stroke-width="8" stroke-linecap="round"/>
+  <path d="M96 40H86Q79 40 79 48V56Q79 64 72 65Q79 66 79 74V82Q79 90 86 90H96
+           M149 40H159Q166 40 166 48V56Q166 64 173 65Q166 66 166 74V82Q166 90 159 90H149"
+        fill="none" stroke="#FF80BF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M108 59H137" fill="none" stroke="#80FFEA" stroke-width="9" stroke-linecap="round"/>
+  <path d="M108 73H129" fill="none" stroke="#F8F8F2" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  </g>
+</svg>

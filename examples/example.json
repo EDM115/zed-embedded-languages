@@ -1,0 +1,7 @@
+{
+  "reportQuery": "WITH active_accounts AS (SELECT id FROM accounts WHERE active = true) SELECT id FROM active_accounts ORDER BY id;",
+  "lookupQuery": "SELECT id, label FROM widgets WHERE tenant_id = :tenant AND rank >= ?12;",
+  "preview": "<!-- report --><h1>Orders & Payments</h1><p>Review the totals</p>",
+  "renderHint": "<source src=summary.mp4>",
+  "message": "Select an account from the list."
+}

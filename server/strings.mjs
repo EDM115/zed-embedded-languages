@@ -26,6 +26,96 @@ const binaries = new Set(["binary_operator", "binary_expression", "binary_expr"]
 const bindingNodes = new Set(["identifier", "variable_name"]);
 const assignmentOperators = new Set(["=", "+=", ".=", ":="]);
 const expressionOperators = new Set([...assignmentOperators, "+", ".", "%"]);
+const escapedStringHosts = new Set([
+  "python",
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "tsx",
+  "go",
+  "rust",
+]);
+const escapeValues = new Map([
+  ["\\n", "\n"],
+  ["\\r", "\r"],
+  ["\\t", "\t"],
+  ["\\\\", "\\"],
+  ['\\"', '"'],
+  ["\\'", "'"],
+  ["{{", "{"],
+  ["}}", "}"],
+]);
+
+export function decodeStringEscapes(node, host, opening, start, text, holes) {
+  const parent = node.parent;
+  const rawPython = host === "python" && /^[a-z]*r/i.test(opening);
+
+  if (
+    !escapedStringHosts.has(host) ||
+    (node.type === "template_string" &&
+      parent?.type === "call_expression" &&
+      parent.childForFieldName("arguments")?.equals(node))
+  ) {
+    return { text, holes };
+  }
+
+  const children = node.namedChildren.flatMap((child) =>
+    child.type === "string_content" ? child.namedChildren : [child],
+  );
+  const escapes = [];
+
+  for (const child of children) {
+    if (
+      (!rawPython && child.type === "escape_sequence") ||
+      (host === "python" && child.type === "escape_interpolation")
+    ) {
+      const value = escapeValues.get(child.text);
+      if (value) {
+        escapes.push({ startIndex: child.startIndex, endIndex: child.endIndex, value });
+      }
+    }
+  }
+
+  if (!escapes.length) {
+    return { text, holes };
+  }
+
+  // Each decoded boundary maps to an offset in the original literal, including the full escape
+  const sourceOffsets = [0];
+  let decoded = "";
+  let cursor = 0;
+
+  for (const escape of escapes) {
+    const offset = escape.startIndex - start;
+    decoded += text.slice(cursor, offset) + escape.value;
+    while (cursor < offset) {
+      sourceOffsets.push(++cursor);
+    }
+    cursor = escape.endIndex - start;
+    sourceOffsets.push(cursor);
+  }
+
+  decoded += text.slice(cursor);
+  while (cursor < text.length) {
+    sourceOffsets.push(++cursor);
+  }
+
+  let index = 0;
+  const decodedHoles = holes.map(([start, end]) => {
+    while (sourceOffsets[index] < start) {
+      index++;
+    }
+    const decodedStart = index;
+    while (sourceOffsets[index] < end) {
+      index++;
+    }
+
+    return [decodedStart, index];
+  });
+
+  return { text: decoded, holes: decodedHoles, sourceOffsets };
+}
 
 const field = (node, ...names) => {
   for (const name of names) {
@@ -153,7 +243,6 @@ export function braceFormatHoles(node, host, text) {
 
 function staticParts(node, regions, host, depth = 0) {
   node = unwrap(node);
-
 
   if (!node || depth > 40) {
     return [];

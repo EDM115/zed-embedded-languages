@@ -1,0 +1,8 @@
+$query: "SELECT account_id, SUM(amount) AS total FROM invoices WHERE tenant_id = :tenant GROUP BY account_id;"
+$payload: "[[1, 2], [3, 4]]"
+$markup: '<h1>Orders & Payments</h1><p>Review the totals</p>'
+
+.report
+  --query: #{$query}
+  --payload: #{$payload}
+  --markup: #{$markup}

@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { builtInGrammars, installedLanguages, loadTarget, makeParser } from "./grammars.mjs";
-import { assembleRegions, braceFormatHoles } from "./strings.mjs";
+import { assembleRegions, braceFormatHoles, decodeStringEscapes } from "./strings.mjs";
 
 const grammarPath = (name) => join(import.meta.dirname, "node_modules", builtInGrammars[name]);
 
@@ -26,15 +26,34 @@ const jsonQuery = `
   ["{" "}" "[" "]"] @punctuation.bracket
 `;
 const sqlSignature =
-  /^(?:select\s+(?:(?:[\d*'"]|distinct\b)|[\s\S]+?\bfrom\s+\S)|with\s+[\w"]+\s*(?:\([^)]*\)\s*)?as\s*\(|(?:insert|replace)\s+into\s|update\s+\S+\s+set\s|delete\s+from\s|(?:create|drop|alter|truncate)\s+(?:(?:or\s+replace|temporary|temp)\s+)?(?:table|view|database|schema|index|function|trigger|type)\b)/i;
+  /^(?:(?:--[^\r\n]*(?:\r\n?|\n)|\/\*[\s\S]*?\*\/)\s*)*(?:select\s+(?=\S)(?:[\d*'"]|distinct\b|current_(?:date|time|timestamp|user)\b|[a-z_]\w*\s*\(|[\s\S]+?\bfrom\s+\S)|with\s+(?:recursive\s+)?[\w"]+\s*(?:\([^)]*\)\s*)?as\s*\(|(?:insert|replace)\s+into\s|update\s+\S+\s+set\s|delete\s+from\s|(?:create|drop|alter|truncate)\s+(?:(?:or\s+replace|temporary|temp)\s+)?(?:table|view|database|schema|index|function|trigger|type)\b)/i;
+const sqlParameter =
+  /--[^\r\n]*|\/\*[\s\S]*?\*\/|(['"\x60])(?:\1\1|\\[\s\S]|(?!\1)[^\\])*\1|\$(\w*)\$[\s\S]*?\$\2\$|::|(%\([a-z_]\w*\)[sdf]|%[sdf]\b|\?\d+\b|(?<![\w$])[:$][a-z_]\w*)/gi;
+const htmlVoidTags = /^(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i;
+const htmlOptionalEndTags =
+  /^(?:colgroup|dd|dt|li|optgroup|option|p|rp|rt|tbody|td|tfoot|th|thead|tr)$/i;
 const detectors = [
   ["sql", sqlSignature],
-  ["json", /^(?:\{\s*"[^"]+"[\s\S]*\}|\[\s*(?:[{"\d-]|true\b|false\b|null\b)[\s\S]*\])$/],
-  ["xml", /^<\?xml\s+version=/i],
+  ["json", /^(?:\{\s*"[\s\S]*\}|\[\s*(?:[["{\d-]|true\b|false\b|null\b)[\s\S]*\])$/],
   [
-    "html",
-    /^<(?:!doctype\s+html\b|[a-z][\w-]*(?:\s+[^<>]+)?\s*\/>|(?:br|hr|img|input|meta|link)(?:\s+[^<>]+)?>)|^<([a-z][\w-]*)\b[^<>]*>[\s\S]*<\/\1\s*>$/i,
+    "xml",
+    /^(?:<!--[\s\S]*?-->\s*)*(?:<\?[a-z_][\w.:-]*(?=[\s?])|<!DOCTYPE\s+(?!html\b)[a-z_:]|<[a-z_][\w.-]*:[\w.-]+(?=[\s/>])|<[a-z_][\w.:-]*(?=[\s/>])[\s\S]*<!\[CDATA\[)/i,
   ],
+  ["html", /^(?:<[a-z][\w:-]*(?=[\s/>])|<!--|<!doctype\s+html\b)/i, hasHtmlStructure],
+  [
+    "scss",
+    /^(?:\$[a-z_-][\w-]*\s*:[^;]+;|(?=[\s\S]*\}$)[^{}\r\n]+\{[\s\S]*(?:&[.#:\[]|:\s*\$[a-z_-][\w-]*))/i,
+  ],
+  ["toml", /^(?:#[^\r\n]*\r?\n\s*)*\[\[[^\r\n]+?\]\][ \t]*(?:#[^\r\n]*)?\r?\n\s*["'\w-][^=\r\n]*=/],
+  [
+    "nginx",
+    /^(?:(?:server|http|events|stream)\s*|(?:location|upstream)[ \t]+[^\s{}][^{}\r\n]*)(?=\{)[\s\S]*?[{;]\s*(?:listen|server_name|proxy_pass|root|worker_connections)[ \t]+[^\s;{}][^;{}\r\n]*;/,
+  ],
+  [
+    "dockerfile",
+    /^(?:(?:#|arg[ \t]+)[^\r\n]*\r?\n\s*)*from[ \t]+\S[^\r\n]*\r?\n(?:[ \t]*(?:#[^\r\n]*)?\r?\n)*[ \t]*(?:add|arg|cmd|copy|entrypoint|env|expose|from|healthcheck|label|onbuild|run|shell|stopsignal|user|volume|workdir)[ \t]+\S/i,
+  ],
+  ["powershell", /^(?:#[^\r\n]*\r?\n\s*)*param\s*\(\s*(?:\[[^\]\r\n]+\]\s*)?\$[a-z_]\w*/i],
 ];
 
 const captureTypes = {
@@ -191,10 +210,10 @@ function stringRegion(node, source, host) {
     holes.push(...braceFormatHoles(node, host, text));
   }
 
-  return { start, text, holes, marker };
+  return { start, marker, ...decodeStringEscapes(node, host, open, start, text, holes) };
 }
 
-function snippetText(region, target) {
+function snippetText(region) {
   let text = region.text;
 
   for (const [start, end] of region.holes.toReversed()) {
@@ -205,26 +224,178 @@ function snippetText(region, target) {
     text = text.slice(0, start) + placeholder + text.slice(end);
   }
 
-  if (target === "sql") {
-    text = text.replace(
-      /%\([A-Za-z_]\w*\)[sdf]|%[sdf]\b/g,
-      (value) => "?" + " ".repeat(value.length - 1),
-    );
-  }
-
   return text;
 }
 
-function tokensFor(target, region) {
-  const text = snippetText(region, target.name);
-  const tree = target.parser.parse(text);
+function hasHtmlStructure(root) {
+  if (root.descendantsOfType("erroneous_end_tag").length) {
+    return false;
+  }
+
+  return root.namedChildren.some((child) => {
+    if (
+      child.type === "doctype" ||
+      child.lastNamedChild?.type === "end_tag" ||
+      child.firstNamedChild?.type === "self_closing_tag"
+    ) {
+      return true;
+    }
+
+    const tag = child.firstNamedChild?.firstNamedChild?.text;
+
+    return (
+      child.type === "element" &&
+      tag &&
+      (htmlVoidTags.test(tag) || (htmlOptionalEndTags.test(tag) && child.namedChildCount > 1))
+    );
+  });
+}
+
+function parsesCleanly(parser, text) {
+  const validation = parser.parse(text);
+
+  try {
+    return validation?.rootNode.hasError === false;
+  } finally {
+    validation?.delete();
+  }
+}
+
+function parsesWithSqlTrim(parser, root, text) {
+  // Validate TRIM(... 'pad' FROM value) as a regular two-argument call, then use the original tree for highlighting
+  const trim =
+    /(trim\s*\(\s*)(?:(?:both|leading|trailing)\s+)?('(?:''|\\[\s\S]|[^'\\])*')\s*from\b/iy;
+  const parts = [];
+  let offset = 0;
+
+  for (const call of root.descendantsOfType("invocation")) {
+    if (!call.hasError || call.startIndex < offset) {
+      continue;
+    }
+
+    trim.lastIndex = call.startIndex;
+    const match = trim.exec(text);
+
+    if (match && trim.lastIndex <= call.endIndex) {
+      parts.push(text.slice(offset, call.startIndex), match[1], match[2], ", ");
+      offset = trim.lastIndex;
+    }
+  }
+
+  if (!parts.length) {
+    return false;
+  }
+
+  parts.push(text.slice(offset));
+
+  return parsesCleanly(parser, parts.join(""));
+}
+
+function parsesWithHtmlRecovery(parser, root, text) {
+  const parts = [];
+  let offset = 0;
+
+  // An ampersand followed by whitespace or a tag is ordinary text in HTML
+  for (const node of root.descendantsOfType("ERROR")) {
+    if (node.parent?.type !== "element" || node.startIndex < offset) {
+      continue;
+    }
+
+    const original = text.slice(node.startIndex, node.endIndex);
+    const plain = original.replace(/&(?=\s|<|$)/g, "x");
+    if (plain !== original) {
+      parts.push(text.slice(offset, node.startIndex), plain);
+      offset = node.endIndex;
+    }
+  }
+
+  // This grammar can require an implicit end tag at EOF even when HTML permits omission
+  const last = root.lastNamedChild;
+  const tag = last?.firstNamedChild?.firstNamedChild?.text;
+  const endTag =
+    last?.type === "element" &&
+    last.hasError &&
+    last.lastNamedChild?.type !== "end_tag" &&
+    tag &&
+    htmlOptionalEndTags.test(tag)
+      ? "</" + tag + ">"
+      : "";
+
+  if (!parts.length && !endTag) {
+    return false;
+  }
+
+  parts.push(text.slice(offset), endTag);
+
+  return parsesCleanly(parser, parts.join(""));
+}
+
+function parsesWithXmlDoctypeSpacing(parser, root, text) {
+  const doctype = root.descendantsOfType("doctypedecl")[0];
+  const close = doctype?.children.findLast((child) => child.type === "]");
+
+  // The XML grammar can require whitespace before the end of an internal DTD subset
+  return (
+    doctype?.hasError &&
+    close &&
+    parsesCleanly(parser, text.slice(0, close.startIndex) + " " + text.slice(close.startIndex))
+  );
+}
+
+function acceptsAutomaticParse(target, root, text) {
+  if (!root.hasError) {
+    // The JSON grammar accepts multiple top-level values, but a single payload has just one
+    return (
+      target.name !== "json" ||
+      root.namedChildren.filter((node) => node.type !== "comment").length === 1
+    );
+  }
+
+  switch (target.name) {
+    case "sql":
+      return parsesWithSqlTrim(target.parser, root, text);
+    case "html":
+      return parsesWithHtmlRecovery(target.parser, root, text);
+    case "xml":
+      return parsesWithXmlDoctypeSpacing(target.parser, root, text);
+    default:
+      return false;
+  }
+}
+
+function tokensFor(target, region, evidence) {
+  let text = snippetText(region);
+
+  // The Dockerfile grammar expects a line ending after the final instruction
+  if (target.name === "dockerfile" && !text.endsWith("\n")) {
+    text += "\n";
+  }
+
+  let tree = target.parser.parse(text);
 
   if (!tree) {
     return [];
   }
 
   try {
-    if (!region.marker && tree.rootNode.hasError) {
+    if (target.name === "sql" && tree.rootNode.hasError) {
+      // Only retry unsupported binds and format placeholders, skipping quotes, comments, and casts
+      const normalized = text.replace(sqlParameter, (value, _quote, _dollarTag, parameter) =>
+        parameter ? "?" + " ".repeat(value.length - 1) : value,
+      );
+      const retried = normalized !== text ? target.parser.parse(normalized) : undefined;
+      if (retried) {
+        tree.delete();
+        tree = retried;
+        text = normalized;
+      }
+    }
+
+    if (!region.marker && !acceptsAutomaticParse(target, tree.rootNode, text)) {
+      return [];
+    }
+
+    if (evidence && !evidence(tree.rootNode)) {
       return [];
     }
 
@@ -255,7 +426,7 @@ function tokensFor(target, region) {
     const tokens = [];
     const modifiers = target.name === "json" ? 1 : 0;
 
-    for (const { start: sourceStart, offset, length } of region.parts) {
+    for (const { start: sourceStart, offset, length, sourceOffsets } of region.parts) {
       const limit = offset + length;
 
       for (let start = offset; start < limit;) {
@@ -268,8 +439,8 @@ function tokensFor(target, region) {
 
         if (type >= 0) {
           tokens.push({
-            start: sourceStart + start - offset,
-            end: sourceStart + end - offset,
+            start: sourceStart + (sourceOffsets?.[start - offset] ?? start - offset),
+            end: sourceStart + (sourceOffsets?.[end - offset] ?? end - offset),
             type,
             modifiers,
             target: target.name,
@@ -296,7 +467,12 @@ function snippetFrom(parts) {
 
   for (const part of parts) {
     const offset = region.text.length;
-    region.parts.push({ start: part.start, offset, length: part.text.length });
+    region.parts.push({
+      start: part.start,
+      offset,
+      length: part.text.length,
+      sourceOffsets: part.sourceOffsets,
+    });
     region.text += part.text;
 
     for (const [start, end] of part.holes) {
@@ -425,29 +601,31 @@ export async function createHighlighter(extensionsDirectory, options = {}, log =
         const region = snippetFrom(parts);
         const text = snippetText(region).trim();
         const firstLine = text.split(/\r?\n/, 1)[0];
-        const candidates = region.marker
-          ? [region.marker]
-          : [
-              ...new Set(
-                [...custom, ...detectors]
-                  .filter(([, signature]) => signature.test(text))
-                  .map(([name]) => name)
-                  .concat(
-                    inventory
-                      .filter((language) => language.firstLine?.test(firstLine))
-                      .map((language) => language.name),
-                  ),
-              ),
-            ];
+        const candidates = new Map();
 
-        for (const candidate of candidates) {
+        if (region.marker) {
+          candidates.set(region.marker, undefined);
+        } else {
+          for (const [name, signature, evidence] of [...custom, ...detectors]) {
+            if (!candidates.has(name) && signature.test(text)) {
+              candidates.set(name, evidence);
+            }
+          }
+          for (const language of inventory) {
+            if (!candidates.has(language.name) && language.firstLine?.test(firstLine)) {
+              candidates.set(language.name, undefined);
+            }
+          }
+        }
+
+        for (const [candidate, evidence] of candidates) {
           const target = await targetFor(candidate);
 
           if (!target) {
             continue;
           }
 
-          const found = tokensFor(target, region);
+          const found = tokensFor(target, region, evidence);
 
           if (!found.length) {
             continue;
@@ -460,7 +638,7 @@ export async function createHighlighter(extensionsDirectory, options = {}, log =
 
         if (
           region.marker ||
-          candidates.length ||
+          candidates.size ||
           text.length > 4096 ||
           genericChecks >= 16 ||
           !looksLikeCode(text)

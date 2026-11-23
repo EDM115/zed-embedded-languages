@@ -1,0 +1,29 @@
+[report]
+sql = '''
+-- Show daily totals
+WITH active_accounts AS (
+    SELECT id FROM accounts WHERE active = true
+)
+SELECT a.id, COUNT(o.id) AS total
+FROM active_accounts AS a
+LEFT JOIN orders AS o ON o.account_id = a.id
+WHERE a.id = :account
+GROUP BY a.id;
+'''
+payload = '''
+{
+  "matrix": [[1], [2]],
+  "visible": true,
+  "items": [null, {"id": 3}]
+}
+'''
+markup = '<!-- report --><h1>Orders & Payments</h1><p>Review the totals</p>'
+nginx = '''
+server {
+    listen 8080;
+    server_name example.test;
+}
+'''
+
+# language=sql
+projection = "SELECT account_id"

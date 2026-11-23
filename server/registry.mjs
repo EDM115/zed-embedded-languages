@@ -44,7 +44,7 @@ export async function scanInstalled(directory) {
       .then(parseConfig)
       .catch(() => undefined);
 
-      for (const folder of Array.isArray(manifest?.languages) ? manifest.languages : []) {
+    for (const folder of Array.isArray(manifest?.languages) ? manifest.languages : []) {
       if (
         typeof folder === "string" &&
         folder.split("/").every((part) => /^[\w. -]+$/.test(part) && part !== "." && part !== "..")

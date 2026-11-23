@@ -1,0 +1,9 @@
+$query: "WITH RECURSIVE seq(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM seq WHERE n < 5) SELECT n FROM seq;";
+$payload: '{"matrix": [[1], [2]], "visible": true, "items": [null, {"id": 3}]}';
+$macro: '$accent: #4477aa; .report { &:hover { color: $accent } }';
+$markup: '<!-- report --><h1>Orders & Payments</h1><p>Review the totals</p>';
+
+.report {
+    --query: #{$query};
+    --payload: #{$payload};
+}
