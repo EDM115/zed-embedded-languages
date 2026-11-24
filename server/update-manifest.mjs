@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { appendFile, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { compareNames, parseConfig, scanInstalled } from "./registry.mjs";
@@ -11,6 +11,7 @@ const { values } = parseArgs({
     archives: { type: "string" },
     revision: { type: "string" },
     report: { type: "string" },
+    check: { type: "boolean" },
   },
 });
 const original = await readFile(values.manifest, "utf8");
@@ -157,7 +158,19 @@ const updated =
   generated.replaceAll("\n", eol) +
   (suffix.startsWith("\n") || suffix.startsWith("\r") ? suffix : eol + suffix);
 
-if (updated !== original) {
+if (values.check) {
+  const registered = new Set(server.languages);
+  const additions = sorted.filter((name) => !registered.has(name));
+  const summary = additions.length
+    ? ["### New Zed languages to register", "", ...additions.map((name) => "- " + name.replace(/[\r\n]/g, " "))].join("\n")
+    : "No new Zed languages to register.";
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    await appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\n", "utf8");
+  } else {
+    console.log(summary);
+  }
+  process.exitCode = additions.length ? 1 : 0;
+} else if (updated !== original) {
   await writeFile(values.manifest, updated);
 
   // Zed compares the extension index with the parent installed directory on startup

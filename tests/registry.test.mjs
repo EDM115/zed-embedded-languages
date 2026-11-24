@@ -38,6 +38,19 @@ test("refreshing registrations adds new installed languages without changing unr
   );
 
   const entry = fileURLToPath(new URL("../server/update-manifest.mjs", import.meta.url));
+  async function check(expectedStatus, expectedSummary) {
+    const summary = join(fixture, `summary-${expectedStatus}.md`);
+    const before = await readFile(draft, "utf8");
+    const result = spawnSync(
+      process.execPath,
+      [entry, "--check", "--installed", extensions, "--manifest", draft],
+      { encoding: "utf8", env: { ...process.env, GITHUB_STEP_SUMMARY: summary } },
+    );
+    assert.equal(result.status, expectedStatus, result.stderr);
+    assert.match(await readFile(summary, "utf8"), expectedSummary);
+    assert.equal(await readFile(draft, "utf8"), before);
+  }
+
   function refresh() {
     const result = spawnSync(
       process.execPath,
@@ -46,6 +59,7 @@ test("refreshing registrations adds new installed languages without changing unr
     );
     assert.equal(result.status, 0, result.stderr);
   }
+  await check(1, /^- Example Future Language$/m);
   refresh();
   const first = await readFile(draft, "utf8");
   const output = parseConfig(first);
@@ -58,6 +72,7 @@ test("refreshing registrations adds new installed languages without changing unr
     "example future language",
   );
   assert.equal(output.grammars.example.repository, "https://example.invalid/parser");
+  await check(0, /^No new Zed languages to register\.$/m);
   refresh();
   assert.equal(await readFile(draft, "utf8"), first);
 });

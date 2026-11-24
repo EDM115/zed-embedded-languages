@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install test dependencies
+        run: npm ci --prefix server --ignore-scripts
+      - name: Download Zed grammar fixtures
+        shell: bash
+        run: |
+          fixtures="$RUNNER_TEMP/zed-grammars"
+          while read -r id version; do
+            archive="$RUNNER_TEMP/$id.tar.gz"
+            curl --fail --silent --show-error --location --retry 3 --output "$archive" \
+              "https://api.zed.dev/extensions/$id/$version/download"
+            mkdir -p "$fixtures/$id"
+            tar -xzf "$archive" -C "$fixtures/$id"
+            test -s "$fixtures/$id/grammars/$id.wasm"
+          done <<'GRAMMARS'
+          sql 1.1.8
+          html 0.3.2
+          xml 0.2.0
+          scss 0.2.1
+          toml 1.1.0
+          dockerfile 0.3.0
+          nginx 0.0.3
+          powershell 0.4.3
+          GRAMMARS
+          printf 'ZED_TEST_EXTENSIONS_DIR=%s\n' "$fixtures" >> "$GITHUB_ENV"
+      - name: Run Node tests
+        run: node --test tests/*.test.mjs
+      - name: Install stable Rust
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location --retry 3 --output "$RUNNER_TEMP/rustup-init.sh" https://sh.rustup.rs
+          sh "$RUNNER_TEMP/rustup-init.sh" -y --profile minimal --default-toolchain stable
+          printf '%s\n' "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Run Rust tests
+        run: cargo +stable test --locked

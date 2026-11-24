@@ -1,0 +1,49 @@
+name: Build release artifacts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Build the extension
+        run: |
+          rustup toolchain install stable --profile minimal --target wasm32-wasip2
+          cargo +stable build --locked --release --target wasm32-wasip2
+          cp target/wasm32-wasip2/release/embedded_languages_lsp.wasm target/extension.wasm
+      - name: Package the language server
+        id: server
+        shell: pwsh
+        run: |
+          ./scripts/package-server.ps1
+          $archives = @(Get-ChildItem -LiteralPath target -File -Filter 'embedded-languages-server-*.tar.gz')
+          if ($archives.Count -ne 1) { throw 'Expected one companion archive' }
+          "path=target/$($archives[0].Name)" >> $env:GITHUB_OUTPUT
+      - name: Upload extension.toml
+        uses: actions/upload-artifact@v7
+        with:
+          path: extension.toml
+          archive: false
+          if-no-files-found: error
+      - name: Upload extension.wasm
+        uses: actions/upload-artifact@v7
+        with:
+          path: target/extension.wasm
+          archive: false
+          if-no-files-found: error
+      - name: Upload the language server archive
+        uses: actions/upload-artifact@v7
+        with:
+          path: ${{ steps.server.outputs.path }}
+          archive: false
+          if-no-files-found: error

@@ -1,0 +1,24 @@
+name: Check for new Zed languages
+
+on:
+  schedule:
+    - cron: '0 8 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install registry parser dependencies
+        run: npm ci --prefix server --ignore-scripts
+      - name: Compare the published catalog with the manifest
+        shell: pwsh
+        run: ./scripts/update-language-registry.ps1 -Check

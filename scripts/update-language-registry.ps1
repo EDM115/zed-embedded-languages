@@ -1,6 +1,9 @@
 #Requires -Version 7.4
 [CmdletBinding()]
-param([string] $Revision = 'main')
+param(
+    [string] $Revision = 'main',
+    [switch] $Check
+)
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
@@ -54,5 +57,8 @@ if ($files.Count -ne $catalog.Count) {
 
 $list = Join-Path $cache 'catalog-files.json'
 ConvertTo-Json -InputObject @($files) | Set-Content -LiteralPath $list
-node (Join-Path $root 'server/update-manifest.mjs') --registry $index --archives $list --revision $commit.sha --manifest (Join-Path $root 'extension.toml') --report (Join-Path $cache 'audit.json')
+$options = @('--registry', $index, '--archives', $list, '--revision', $commit.sha, '--manifest', (Join-Path $root 'extension.toml'), '--report', (Join-Path $cache 'audit.json'))
+if ($Check) { $options += '--check' }
+node (Join-Path $root 'server/update-manifest.mjs') @options
+if ($Check) { exit $LASTEXITCODE }
 if ($LASTEXITCODE -ne 0) { throw 'Language manifest update failed' }
