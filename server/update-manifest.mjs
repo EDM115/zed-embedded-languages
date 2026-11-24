@@ -189,11 +189,11 @@ console.log(
   sorted.length +
     " host registrations from " +
     audit.extensions.length +
-    " published registry extensions",
+    " Zed Marketplace extension archives",
 );
 
 if (audit.namesWithoutPackage.length) {
   console.log(
-    "Marketplace entries absent from the pinned registry : " + audit.namesWithoutPackage.join(", "),
+    "Marketplace IDs absent from the pinned registry (archives included) : " + audit.namesWithoutPackage.join(", "),
   );
 }

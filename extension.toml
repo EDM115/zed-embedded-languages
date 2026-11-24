@@ -4,7 +4,7 @@ id = "embedded-languages-lsp"
 name = "Embedded Languages"
 repository = "https://github.com/EDM115/zed-embedded-languages"
 schema_version = 1
-version = "1.0.0"
+version = "1.1.0"
 
 [language_servers.embedded-languages]
 name = "Embedded Languages"
@@ -213,6 +213,7 @@ languages = [
   "Go Work",
   "Godot Resource",
   "Google Apps Script",
+  "Goose",
   "Gradle",
   "Gradle KTS",
   "Grafana Alloy",
@@ -455,6 +456,7 @@ languages = [
   "Rainbow CSV (|)",
   "Rainbow TSV",
   "Rainbow TSV (⭲)",
+  "Rd",
   "ReScript",
   "ReStructuredText",
   "Reason",
@@ -621,6 +623,7 @@ languages = [
   "Yuck",
   "Yul",
   "Yulang",
+  "Zamak",
   "Zed Keybind Context",
   "Zeek",
   "Zig",
@@ -872,6 +875,7 @@ languages = [
 "Go Work" = "go work"
 "Godot Resource" = "godot resource"
 "Google Apps Script" = "google apps script"
+"Goose" = "goose"
 "Gradle" = "gradle"
 "Gradle KTS" = "gradle kts"
 "Grafana Alloy" = "grafana alloy"
@@ -1114,6 +1118,7 @@ languages = [
 "Rainbow CSV (|)" = "rainbow csv (|)"
 "Rainbow TSV" = "rainbow tsv"
 "Rainbow TSV (⭲)" = "rainbow tsv (⭲)"
+"Rd" = "rd"
 "ReScript" = "rescript"
 "ReStructuredText" = "restructuredtext"
 "Reason" = "reason"
@@ -1280,6 +1285,7 @@ languages = [
 "Yuck" = "yuck"
 "Yul" = "yul"
 "Yulang" = "yulang"
+"Zamak" = "zamak"
 "Zed Keybind Context" = "zed keybind context"
 "Zeek" = "zeek"
 "Zig" = "zig"

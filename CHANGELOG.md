@@ -1,5 +1,10 @@
 # `zed-embedded-languages` changelog
 
+## v1.1.0
+
+✨ feat : register Goose, Rd and Zamak as host languages  
+🛠️ ci : run the test suites, build release assets on demand and check the Zed Marketplace for new host languages every week
+
 ## v1.0.0
 
 📦 chore : Zed downloads the companion server and its dependencies as a separate versioned release asset and reuses the local installation on subsequent starts
